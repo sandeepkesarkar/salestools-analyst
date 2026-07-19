@@ -1,0 +1,36 @@
+# Generated datasets (large; regenerate with data/generator/generate.py)
+data/v1/*.jsonl
+data/v2/*.jsonl
+
+# Model artifacts (large binary files)
+models/gguf/
+models/adapters/
+models/merged/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Test cache
+.pytest_cache/
+
+# Claude Code runtime
+.claude/scheduled_tasks.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,11 @@
+# Fine-tuning dependencies — install on Colab Pro before running finetune_*.ipynb
+# Pin versions for reproducibility; update only when constitution amendment approves a change.
+unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git
+peft==0.10.0
+transformers==4.40.2
+trl==0.8.6
+bitsandbytes==0.43.1
+accelerate==0.29.3
+torch==2.2.2
+datasets==2.18.0
+sentencepiece==0.2.0

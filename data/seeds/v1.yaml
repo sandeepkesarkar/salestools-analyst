@@ -1,0 +1,43 @@
+# Seed configuration for salestools training data v1
+# Commit this file alongside train.jsonl / held_out.jsonl to guarantee reproducibility.
+
+version: "1.0.0"
+
+train:
+  seed_start: 0
+  seed_end: 8999
+  count: 1000
+  split: train
+
+held_out:
+  seed_start: 9000
+  seed_end: 9099
+  count: 100
+  split: held_out
+
+generator_flags:
+  salestools_version: "1.0.0"
+  signal_types:
+    - trend_up
+    - trend_down
+    - anomaly_spike
+    - anomaly_drop
+    - anomaly_contextual
+    - segment_drag
+    - scope_refusal
+
+commands:
+  train: |
+    python data/generator/generate.py \
+      --salestools-version 1.0.0 \
+      --seed 0 \
+      --count 1000 \
+      --split train \
+      --output data/v1/train.jsonl
+  held_out: |
+    python data/generator/generate.py \
+      --salestools-version 1.0.0 \
+      --seed 9000 \
+      --count 100 \
+      --split held_out \
+      --output data/v1/held_out.jsonl
