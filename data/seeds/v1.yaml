@@ -28,16 +28,18 @@ generator_flags:
 
 commands:
   train: |
-    python data/generator/generate.py \
+    uv run python data/generator/generate.py \
       --salestools-version 1.0.0 \
       --seed 0 \
       --count 1000 \
       --split train \
+      --signal-types trend_up,trend_down,anomaly_spike,anomaly_drop,anomaly_contextual,segment_drag,scope_refusal \
       --output data/v1/train.jsonl
   held_out: |
-    python data/generator/generate.py \
+    uv run python data/generator/generate.py \
       --salestools-version 1.0.0 \
       --seed 9000 \
       --count 100 \
       --split held_out \
+      --signal-types trend_up,trend_down,anomaly_spike,anomaly_drop,anomaly_contextual,segment_drag,scope_refusal \
       --output data/v1/held_out.jsonl

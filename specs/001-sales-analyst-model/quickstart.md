@@ -9,18 +9,59 @@ each section has an independent pass/fail outcome.
 
 ## Prerequisites
 
+This project uses [`uv`](https://docs.astral.sh/uv/) for all Python environment/dependency
+management — not bare `pip`. Install it once with `brew install uv` (macOS) or see the uv docs
+for other platforms.
+
 ```bash
 # Python 3.10+
-python --version
+uv run python --version
 
-# Install salestools from repo root (Phase 1 must be complete first)
-pip install -e .
+# Create the project venv and install salestools + dev deps (Phase 1 must be complete first)
+uv venv
+uv pip install -e ".[dev]"
 
 # Verify install
-python -c "import salestools; print(salestools.__version__)"
+uv run python -c "import salestools; print(salestools.__version__)"
 
 # Ollama (for Phase 3+ validation only)
-# Install from https://ollama.com then: ollama serve
+# Install from https://ollama.com (or `brew install ollama` on macOS), then: ollama serve
+```
+
+### llama.cpp + Ollama setup (required for `training/export.sh`)
+
+After a Colab fine-tune finishes and the LoRA adapter zip has been downloaded and extracted into
+`models/adapters/<size>/`, `training/export.sh` merges the adapter, converts it to GGUF, and
+registers it with Ollama. This needs both tools set up locally first — they are **not** Python
+packages and are not installed by `pip install -e .`.
+
+```bash
+# 1. Ollama — must be installed and running
+#    macOS: brew install ollama   (or download from https://ollama.com)
+ollama serve &          # leave running in the background
+ollama --version         # sanity check
+
+# 2. llama.cpp — cloned as a sibling directory to this repo and built
+#    export.sh expects it at ../llama.cpp by default (override with LLAMA_CPP_DIR=/path/to/llama.cpp)
+cd ..
+git clone https://github.com/ggml-org/llama.cpp
+cd llama.cpp
+cmake -B build -DGGML_METAL=ON   # macOS/Apple Silicon; drop -DGGML_METAL=ON on Linux/CUDA
+cmake --build build --config Release -j
+cd ../salestools-analyst
+
+# 3. Verify export.sh can find both
+"${LLAMA_CPP_DIR:-../llama.cpp}/build/bin/llama-quantize" --help | head -1
+ollama list
+
+# 4. Python deps for the merge + GGUF conversion steps (installed into the uv venv from above)
+uv pip install torch transformers peft gguf sentencepiece "protobuf>=4.21.0,<5.0.0"
+```
+
+Once both are set up, run the export (see Phase 3 below):
+
+```bash
+MODEL_SIZE=1.5b ADAPTER_PATH=models/adapters/1.5b/ bash training/export.sh
 ```
 
 ---

@@ -83,6 +83,58 @@ def test_segment_col_loaded(tmp_path):
     assert "product" in sf.data.columns
 
 
+def test_multi_segment_shared_dates_does_not_crash(tmp_path):
+    """Multiple segments sharing the same dates (one row per date per segment)
+    must not crash load_sales's reindex (regression: previously raised
+    ValueError: cannot reindex on an axis with duplicate labels)."""
+    dates = pd.date_range("2022-01-03", periods=20, freq="W-MON")
+    rows = []
+    for product in ("A", "B", "C"):
+        for d in dates:
+            rows.append({"date": d, "amount": 100.0, "product": product})
+    df = pd.DataFrame(rows)
+    p = tmp_path / "multi_seg.csv"
+    df.to_csv(p, index=False)
+    sf = load_sales(p, segment_col="product")
+    assert set(sf.data["product"].unique()) == {"A", "B", "C"}
+    assert len(sf.data) == 3 * len(dates)
+
+
+def test_segment_with_many_rows_per_date_preserves_row_count(tmp_path):
+    """Segments with many rows sharing a single date (e.g. per-transaction
+    data) must keep every row rather than collapsing them — downstream code
+    like cohort_analysis counts rows per period."""
+    rows = []
+    for cohort, start, n_txns in [("Q1", "2022-01-01", 5), ("Q2", "2022-04-01", 3)]:
+        for _ in range(n_txns):
+            rows.append({"date": start, "amount": 50.0, "cohort": cohort})
+    df = pd.DataFrame(rows)
+    p = tmp_path / "cohort_multi.csv"
+    df.to_csv(p, index=False)
+    sf = load_sales(p, segment_col="cohort")
+    assert len(sf.data) == 8  # 5 + 3, none aggregated away
+    assert (sf.data["cohort"] == "Q1").sum() == 5
+    assert (sf.data["cohort"] == "Q2").sum() == 3
+
+
+def test_segment_gap_fill_scoped_to_own_date_range(tmp_path):
+    """A segment that starts later than others must not be backfilled with
+    NaN rows before its own first observed date (regression: earlier fix
+    used the dataset-wide date range for every segment, which made every
+    segment's earliest date collapse to the same value)."""
+    rows = []
+    for d in pd.date_range("2022-01-03", periods=8, freq="W-MON"):
+        rows.append({"date": d, "amount": 100.0, "cohort": "early"})
+    for d in pd.date_range("2022-06-06", periods=8, freq="W-MON"):
+        rows.append({"date": d, "amount": 100.0, "cohort": "late"})
+    df = pd.DataFrame(rows)
+    p = tmp_path / "staggered.csv"
+    df.to_csv(p, index=False)
+    sf = load_sales(p, segment_col="cohort")
+    late_dates = sf.data[sf.data["cohort"] == "late"].index
+    assert late_dates.min() == pd.Timestamp("2022-06-06")
+
+
 def test_explicit_freq_overrides_inference(tmp_path):
     # Provide daily data but force monthly freq — will be regularised as monthly
     dates = pd.date_range("2022-01-01", periods=12, freq="MS")

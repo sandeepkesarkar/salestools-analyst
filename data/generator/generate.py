@@ -47,13 +47,14 @@ def generate(
     output: Path,
     delta_from: str | None,
     verbose: bool,
+    signal_types: list[str] | None = None,
 ) -> int:
-    signal_types = list(SIGNAL_MAKERS.keys())
+    types = signal_types if signal_types is not None else list(SIGNAL_MAKERS.keys())
 
     # --delta-from: only generate for signal types NOT in the previous version
     if delta_from is not None:
-        signal_types = [s for s in signal_types if not _is_v1_only(s)]
-        if not signal_types:
+        types = [s for s in types if not _is_v1_only(s)]
+        if not types:
             print("No new signal types found for delta dataset. Nothing to generate.")
             return 0
 
@@ -63,7 +64,7 @@ def generate(
 
     with open(output, "w") as f:
         while written < count:
-            for signal_type in signal_types:
+            for signal_type in types:
                 if written >= count:
                     break
                 maker = SIGNAL_MAKERS[signal_type]
@@ -92,6 +93,8 @@ def generate(
                         written += 1
                         if verbose:
                             print(f"[{written}/{count}] seed={seed} {signal_type} p{paraphrase_id} ✓")
+                        elif written % 25 == 0:
+                            print(f"[{written}/{count}] pairs generated...", flush=True)
                     else:
                         if verbose:
                             print(f"  skip seed={seed} {signal_type} p{paraphrase_id}: {error[:80]}")
@@ -117,6 +120,9 @@ def main() -> None:
     parser.add_argument("--split", choices=["train", "held_out"], default="train")
     parser.add_argument("--delta-from", default=None,
                         help="Only generate signal types added since this version.")
+    parser.add_argument("--signal-types", default=None,
+                        help="Comma-separated list of signal types to restrict generation to "
+                             "(default: all registered types, or v1-only types when --delta-from is set).")
     parser.add_argument("--output", required=True)
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
@@ -129,6 +135,7 @@ def main() -> None:
         output=Path(args.output),
         delta_from=args.delta_from,
         verbose=args.verbose,
+        signal_types=args.signal_types.split(",") if args.signal_types else None,
     )
 
 

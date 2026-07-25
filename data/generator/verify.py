@@ -21,8 +21,8 @@ def _run_code_worker(code: str, csv_path: str, signal_type: str, queue: mp.Queue
         matplotlib.use("Agg")
 
         from salestools import (
-            compare_segments, decompose_trend, detect_anomalies,
-            growth_metrics, load_sales, narrate, plot_annotated,
+            cohort_analysis, compare_segments, decompose_trend, detect_anomalies,
+            forecast, growth_metrics, load_sales, narrate, plot_annotated,
         )
 
         # Replace the placeholder path in code with the actual temp CSV path
@@ -36,6 +36,8 @@ def _run_code_worker(code: str, csv_path: str, signal_type: str, queue: mp.Queue
             "compare_segments": compare_segments,
             "plot_annotated": plot_annotated,
             "narrate": narrate,
+            "forecast": forecast,
+            "cohort_analysis": cohort_analysis,
         }
         exec(exec_code, namespace)  # noqa: S102
 
@@ -77,6 +79,16 @@ def _detect(namespace: dict, signal_type: str) -> bool:
                 bottom = obj.summary.iloc[-1]
                 seg = str(bottom.get("segment", "")).upper()
                 if seg == "C":
+                    return True
+
+        elif signal_type in ("forecast_up", "forecast_down"):
+            if hasattr(obj, "forecast_series") and hasattr(obj.forecast_series, "__len__"):
+                if len(obj.forecast_series) > 0:
+                    return True
+
+        elif signal_type == "cohort_question":
+            if hasattr(obj, "retention") and hasattr(obj.retention, "shape"):
+                if obj.retention.shape[0] > 0:
                     return True
 
     return False
