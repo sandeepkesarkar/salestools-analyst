@@ -8,7 +8,7 @@
 # Prerequisites:
 #   - llama.cpp cloned at $LLAMA_CPP_DIR (default: ../llama.cpp)
 #   - ollama installed and running (ollama serve)
-#   - pip install torch transformers peft
+#   - uv venv && uv pip install -e ".[dev]" torch transformers peft gguf sentencepiece "protobuf>=4.21.0,<5.0.0"
 
 set -euo pipefail
 
@@ -31,7 +31,7 @@ OLLAMA_MODEL="sales-analyst-${MODEL_SIZE}"
 mkdir -p "${MERGED_DIR}" "${GGUF_DIR}"
 
 # ── Extract base model from config ────────────────────────────────────────────
-BASE_MODEL=$(python3 -c "
+BASE_MODEL=$(uv run python3 -c "
 import yaml, sys
 cfg = yaml.safe_load(open('${CONFIG_PATH}'))
 print(cfg['base_model'])
@@ -42,7 +42,7 @@ echo "Adapter:    ${ADAPTER_PATH}"
 # ── Step 1: Merge LoRA adapter into base weights ──────────────────────────────
 echo ""
 echo "==> Step 1: Merging LoRA adapter into base model..."
-python3 - <<EOF
+uv run python3 - <<EOF
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 import torch
@@ -68,7 +68,7 @@ EOF
 # ── Step 2: Convert to GGUF (f16) ─────────────────────────────────────────────
 echo ""
 echo "==> Step 2: Converting to GGUF (f16)..."
-python3 "${LLAMA_CPP_DIR}/convert_hf_to_gguf.py" \
+uv run python3 "${LLAMA_CPP_DIR}/convert_hf_to_gguf.py" \
     "${MERGED_DIR}" \
     --outfile "${GGUF_UNQUANT}" \
     --outtype f16
@@ -78,7 +78,7 @@ echo "  GGUF (f16): ${GGUF_UNQUANT}"
 # ── Step 3: Quantize to q4_k_m ────────────────────────────────────────────────
 echo ""
 echo "==> Step 3: Quantizing to q4_k_m..."
-"${LLAMA_CPP_DIR}/llama-quantize" \
+"${LLAMA_CPP_DIR}/build/bin/llama-quantize" \
     "${GGUF_UNQUANT}" \
     "${GGUF_QUANT}" \
     q4_k_m
@@ -114,14 +114,14 @@ echo "  Created: ${OLLAMA_MODEL}"
 # ── Step 6: Write ModelArtifact JSON (T051) ────────────────────────────────────
 echo ""
 echo "==> Step 6: Writing ModelArtifact JSON..."
-LORA_RANK=$(python3 -c "import yaml; print(yaml.safe_load(open('${CONFIG_PATH}'))['lora_rank'])")
-LORA_ALPHA=$(python3 -c "import yaml; print(yaml.safe_load(open('${CONFIG_PATH}'))['lora_alpha'])")
-SEED=$(python3 -c "import yaml; print(yaml.safe_load(open('${CONFIG_PATH}'))['seed'])")
-SALESTOOLS_VERSION=$(python3 -c "import salestools; print(salestools.__version__)" 2>/dev/null || echo "1.0.0")
+LORA_RANK=$(uv run python3 -c "import yaml; print(yaml.safe_load(open('${CONFIG_PATH}'))['lora']['r'])")
+LORA_ALPHA=$(uv run python3 -c "import yaml; print(yaml.safe_load(open('${CONFIG_PATH}'))['lora']['lora_alpha'])")
+SEED=$(uv run python3 -c "import yaml; print(yaml.safe_load(open('${CONFIG_PATH}'))['training']['seed'])")
+SALESTOOLS_VERSION=$(uv run python3 -c "import salestools; print(salestools.__version__)" 2>/dev/null || echo "1.0.0")
 GGUF_SIZE=$(du -sh "${GGUF_QUANT}" 2>/dev/null | cut -f1 || echo "unknown")
 CREATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-python3 - <<EOF
+uv run python3 - <<EOF
 import json, os
 meta = {
     "model_name": "${OLLAMA_MODEL}",

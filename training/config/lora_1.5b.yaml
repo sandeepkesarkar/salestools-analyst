@@ -27,7 +27,7 @@ training:
   warmup_ratio: 0.03
   lr_scheduler_type: cosine
   logging_steps: 10
-  save_strategy: epoch
+  save_strategy: "no"
   seed: 42
 
 data:
