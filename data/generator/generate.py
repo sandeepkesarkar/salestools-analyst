@@ -32,7 +32,7 @@ from data.generator.verify import verify_pair
 
 # Seed ranges: 0–8999 = training; 9000–9999 = held-out
 TRAIN_SEED_RANGE = (0, 8999)
-HELD_OUT_SEED_RANGE = (9000, 9099)
+HELD_OUT_SEED_RANGE = (9000, 9999)
 
 
 def _is_v1_only(signal_type: str) -> bool:
@@ -100,11 +100,14 @@ def generate(
                             print(f"  skip seed={seed} {signal_type} p{paraphrase_id}: {error[:80]}")
             seed += 1
 
-            # Safety: stop if we've exhausted the reasonable seed range
-            if split == "held_out" and seed > HELD_OUT_SEED_RANGE[1] + 500:
+            # Safety: stop if we've exhausted the reasonable seed range. Bounded exactly at
+            # each split's reserved range (not with slack past it) so a low verification
+            # success rate can never spill train generation into the held-out-reserved seed
+            # block (9000-9999) or vice versa.
+            if split == "held_out" and seed > HELD_OUT_SEED_RANGE[1]:
                 print(f"Warning: exhausted held_out seed range, stopping at {written} pairs.")
                 break
-            if split == "train" and seed > TRAIN_SEED_RANGE[1] + 500:
+            if split == "train" and seed > TRAIN_SEED_RANGE[1]:
                 print(f"Warning: exhausted train seed range, stopping at {written} pairs.")
                 break
 
