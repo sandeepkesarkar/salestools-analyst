@@ -1,0 +1,36 @@
+# QLoRA config for continual v2 fine-tune of the v1 1.5B adapter — Colab Pro L4 (~10-15 min, ~200 pairs)
+base_model: Qwen/Qwen2.5-Coder-1.5B-Instruct
+v1_adapter_dir: models/adapters/1.5b
+output_dir: models/adapters/1.5b-v2
+
+lora:
+  r: 16
+  lora_alpha: 32
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+  lora_dropout: 0.05
+  bias: none
+  task_type: CAUSAL_LM
+
+training:
+  bf16: true
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 4
+  max_seq_length: 512
+  num_train_epochs: 5
+  learning_rate: 1.0e-4
+  warmup_ratio: 0.03
+  lr_scheduler_type: linear
+  logging_steps: 5
+  save_strategy: "no"
+  seed: 42
+
+data:
+  delta_file: data/v2/delta.jsonl
+  system_prompt_file: training/config/system_prompt.txt
