@@ -1,18 +1,35 @@
-base_model: "Qwen/Qwen2.5-Coder-3B-Instruct"
+# QLoRA config for Qwen2.5-Coder-3B-Instruct — Colab Pro A100 (~90 min)
+base_model: Qwen/Qwen2.5-Coder-3B-Instruct
+output_dir: models/adapters/3b
 
-lora_rank: 16
-lora_alpha: 32
-target_modules:
-  - q_proj
-  - k_proj
-  - v_proj
-  - o_proj
-  - gate_proj
-  - up_proj
-  - down_proj
+lora:
+  r: 16
+  lora_alpha: 32
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+  lora_dropout: 0.05
+  bias: none
+  task_type: CAUSAL_LM
 
-bf16: true
-batch_size: 4
-gradient_accumulation: 4
-max_seq_len: 512
-seed: 42
+training:
+  bf16: true
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 4
+  max_seq_length: 512
+  num_train_epochs: 3
+  learning_rate: 2.0e-4
+  warmup_ratio: 0.03
+  lr_scheduler_type: cosine
+  logging_steps: 10
+  save_strategy: epoch
+  seed: 42
+
+data:
+  train_file: data/v1/train.jsonl
+  system_prompt_file: training/config/system_prompt.txt
