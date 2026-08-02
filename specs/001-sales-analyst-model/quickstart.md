@@ -30,10 +30,18 @@ uv run python -c "import salestools; print(salestools.__version__)"
 
 ### llama.cpp + Ollama setup (required for `training/export.sh`)
 
-After a Colab fine-tune finishes and the LoRA adapter zip has been downloaded and extracted into
-`models/adapters/<size>/`, `training/export.sh` merges the adapter, converts it to GGUF, and
-registers it with Ollama. This needs both tools set up locally first — they are **not** Python
-packages and are not installed by `pip install -e .`.
+After a Colab fine-tune finishes, the adapter needs to land in `models/adapters/<size>/` locally
+before `training/export.sh` can merge it, convert it to GGUF, and register it with Ollama. Each
+training notebook's last two cells give two ways to get it there:
+
+- **Hugging Face Hub (preferred, if a write token is configured in Colab)**: the notebook pushes
+  to a public repo (e.g. `sandeepk2000/sales-analyst-1.5b`); pull it down with
+  `uv run hf download sandeepk2000/sales-analyst-1.5b --local-dir models/adapters/1.5b`.
+- **Manual zip (fallback, no token needed)**: the notebook also downloads a zip via the browser —
+  unzip it into `models/adapters/<size>/`.
+
+Either way, `export.sh` itself needs `llama.cpp` and `ollama` set up locally first — they are
+**not** Python packages and are not installed by `pip install -e .`.
 
 ```bash
 # 1. Ollama — must be installed and running
