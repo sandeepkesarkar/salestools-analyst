@@ -70,7 +70,7 @@ description: "Task list for Local Sales-Analyst Codegen Model"
 - [X] T019 [P] [US1] Implement question template library in `data/generator/questions.py`: ~20 canonical templates covering all signal types, each with 5 paraphrase variants; expose `get_questions(signal_type: str) -> list[str]`
 - [X] T020 [US1] Implement multiprocessing sandbox verifier in `data/generator/verify.py`: `verify_pair(code: str, dataset: pd.DataFrame, detection_fn) -> (bool, str)` — spawn `multiprocessing.Process` with 30 s timeout, inject code into clean namespace containing only dataset + `salestools` imports, call `detection_fn` on namespace, return (passed, error_message) (depends on T007)
 - [X] T021 [US1] Implement `data/generator/generate.py` CLI: flags `--salestools-version`, `--seed`, `--count`, `--split {train,held_out}`, `--delta-from <version>`, `--output <path>`; cross-product question templates × signal generators × seed range; filter via `verify.py`; write verified `TrainingPair` objects to JSONL (depends on T018, T019, T020, T007, all library functions T010–T016)
-- [ ] T022 [US1] Run generator to produce `data/v1/train.jsonl` (~1,000 pairs, seeds 0–8999) and `data/v1/held_out.jsonl` (~100 pairs, seeds 9000–9099); commit seed config to `data/seeds/v1.yaml`; confirm all pairs have `"verified": true` (depends on T021)
+- [X] T022 [US1] Run generator to produce `data/v1/train.jsonl` (~1,000 pairs, seeds 0–8999) and `data/v1/held_out.jsonl` (~100 pairs, seeds 9000–9099); commit seed config to `data/seeds/v1.yaml`; confirm all pairs have `"verified": true` (depends on T021)
 
 ### Fine-Tune — 1.5B
 
@@ -93,7 +93,7 @@ description: "Task list for Local Sales-Analyst Codegen Model"
 **Independent Test**: `python eval/run_eval.py --model sales-analyst-1.5b --held-out data/v1/held_out.jsonl --signal-type anomaly_spike anomaly_drop anomaly_contextual` → EvalReport shows `signal_detection_accuracy` ≥ 0.80.
 
 - [X] T027 [US2] Implement `eval/run_eval.py`: for each pair in `--held-out` JSONL, send question to `--model` via Ollama REST, execute returned code in sandbox via `data/generator/verify.py`, accumulate `pass_at_1`, `signal_detection_accuracy`, `scope_refusal_accuracy` (optionally filtered by `--signal-type`); write `EvalReport` JSON to `eval/reports/<variant>-<timestamp>.json`; print summary to stdout (depends on T020, T025 pattern)
-- [ ] T028 [US2] Run `python eval/run_eval.py --model sales-analyst-1.5b --held-out data/v1/held_out.jsonl --salestools-version 1.0.0`; confirm `pass_at_1 ≥ 0.85` and `signal_detection_accuracy ≥ 0.80` per SC-001/SC-002; commit report to `eval/reports/` (depends on T027, Phase 3 model)
+- [X] T028 [US2] Run `python eval/run_eval.py --model sales-analyst-1.5b --held-out data/v1/held_out.jsonl --salestools-version 1.0.0`; confirm `pass_at_1 ≥ 0.85` and `signal_detection_accuracy ≥ 0.80` per SC-001/SC-002; commit report to `eval/reports/` (depends on T027, Phase 3 model)
 
 **Checkpoint**: At this point, User Stories 1 and 2 should both work independently.
 
@@ -107,9 +107,9 @@ description: "Task list for Local Sales-Analyst Codegen Model"
 
 - [X] T029 [P] [US4] Create `training/config/lora_3b.yaml`: same hyperparams as `lora_1.5b.yaml`, targeting `Qwen/Qwen2.5-Coder-3B-Instruct`
 - [X] T030 [US4] Implement `training/finetune_3b.ipynb`: same structure as `finetune_1.5b.ipynb`; load `data/v1/train.jsonl` → ChatML format → Unsloth QLoRA with `lora_3b.yaml` on A100 → save adapter to `models/adapters/3b/` (depends on T029, T022)
-- [ ] T031 [US4] Run 3B fine-tune on Colab Pro A100; run `training/export.sh MODEL_SIZE=3b ADAPTER_PATH=models/adapters/3b/` → `ollama create sales-analyst-3b`; write `models/gguf/sales-analyst-3b.meta.json` (depends on T030, T024)
+- [X] T031 [US4] Run 3B fine-tune on Colab Pro A100; run `training/export.sh MODEL_SIZE=3b ADAPTER_PATH=models/adapters/3b/` → `ollama create sales-analyst-3b`; write `models/gguf/sales-analyst-3b.meta.json` (depends on T030, T024)
 - [X] T032 [P] [US4] Implement `eval/compare.py`: accept two EvalReport JSON file paths (1.5B and 3B); print aligned side-by-side table with columns `model_variant`, `pass_at_1`, `signal_detection_accuracy`, `scope_refusal_accuracy`, `eval_set_size`
-- [ ] T033 [US4] Run 3B eval + generate A/B report: `python eval/run_eval.py --model sales-analyst-3b ...`; then `python eval/compare.py eval/reports/1.5B-*.json eval/reports/3B-*.json`; confirm SC-003 satisfied (depends on T032, T027, T031)
+- [X] T033 [US4] Run 3B eval + generate A/B report: `python eval/run_eval.py --model sales-analyst-3b ...`; then `python eval/compare.py eval/reports/1.5B-*.json eval/reports/3B-*.json`; confirm SC-003 satisfied (depends on T032, T027, T031)
 
 **Checkpoint**: At this point, User Stories 1, 2, and 4 should all be independently functional.
 
@@ -139,7 +139,7 @@ description: "Task list for Local Sales-Analyst Codegen Model"
 - [X] T038 [US5] Update `salestools/__init__.py`: export `forecast`, `cohort_analysis`; bump `__version__` to `"2.0.0"` (depends on T036, T037)
 - [X] T039 [P] [US5] Add v2 signal generators to `data/generator/signals.py`: `make_forecast_question` (dataset with clear future trend), `make_cohort_question` (dataset with diverging cohort retention)
 - [X] T040 [P] [US5] Add v2 question templates to `data/generator/questions.py`: 5 `forecast`-type templates × 5 paraphrases, 5 `cohort_analysis`-type templates × 5 paraphrases
-- [ ] T041 [US5] Generate delta dataset: `python data/generator/generate.py --salestools-version 2.0.0 --delta-from 1.0.0 --seed 42 --count 200 --output data/v2/delta.jsonl`; confirm all 200 pairs verified (depends on T039, T040, T038, T021)
+- [X] T041 [US5] Generate delta dataset: `python data/generator/generate.py --salestools-version 2.0.0 --delta-from 1.0.0 --seed 42 --count 200 --output data/v2/delta.jsonl`; confirm all 200 pairs verified (depends on T039, T040, T038, T021)
 - [X] T042 [US5] Implement `training/finetune_1.5b_v2.ipynb`: continue training from `models/adapters/1.5b/` checkpoint on `data/v2/delta.jsonl` only; save updated adapter to `models/adapters/1.5b-v2/` (depends on T041, T023)
 - [X] T043 [US5] Export v2 model: `training/export.sh MODEL_SIZE=1.5b-v2 ADAPTER_PATH=models/adapters/1.5b-v2/` → `ollama create sales-analyst-1.5b-v2` (depends on T042, T024)
 - [X] T044 [US5] Run before/after lifecycle eval: evaluate `sales-analyst-1.5b` and `sales-analyst-1.5b-v2` on both v1 and v2 held-out questions; `python eval/compare.py` to confirm v2 model improves on v2-function questions and v1-question accuracy within 2% of v1-only model; confirm SC-007 (depends on T043, T027, T032)
