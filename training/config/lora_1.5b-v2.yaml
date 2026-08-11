@@ -1,4 +1,4 @@
-# QLoRA config for continual v2 fine-tune of the v1 1.5B adapter — Colab Pro L4 (~10-15 min, ~200 pairs)
+# QLoRA config for continual v2 fine-tune of the v1 1.5B adapter — Colab Pro L4 (~10-15 min, ~410 pairs)
 base_model: Qwen/Qwen2.5-Coder-1.5B-Instruct
 v1_adapter_dir: models/adapters/1.5b
 output_dir: models/adapters/1.5b-v2
@@ -23,7 +23,7 @@ training:
   per_device_train_batch_size: 4
   gradient_accumulation_steps: 4
   max_seq_length: 512
-  num_train_epochs: 5
+  num_train_epochs: 3
   learning_rate: 1.0e-4
   warmup_ratio: 0.03
   lr_scheduler_type: linear
@@ -33,4 +33,7 @@ training:
 
 data:
   delta_file: data/v2/delta.jsonl
+  # Stratified sample of v1 pairs (data/generator/sample_replay.py), mixed in as a replay
+  # buffer so the continual fine-tune doesn't catastrophically forget v1 signal types.
+  replay_file: data/v2/replay_v1.jsonl
   system_prompt_file: training/config/system_prompt.txt

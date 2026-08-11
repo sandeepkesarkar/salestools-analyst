@@ -1,6 +1,9 @@
 # Generated datasets (large; regenerate with data/generator/generate.py)
 data/v1/*.jsonl
 data/v2/*.jsonl
+# ...except the small, versioned continual-FT replay buffer (sampled from data/v1/train.jsonl,
+# committed so Colab has it without needing to regenerate the full v1 set)
+!data/v2/replay_v1.jsonl
 
 # Model artifacts (large binary files)
 models/gguf/
