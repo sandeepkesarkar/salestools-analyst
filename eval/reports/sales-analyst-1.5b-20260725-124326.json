@@ -1,0 +1,136 @@
+{
+  "model_variant": "sales-analyst-1.5b",
+  "eval_set": "data/v1/held_out.jsonl",
+  "eval_set_size": 15,
+  "salestools_version": "1.0.0",
+  "signal_type_filter": [
+    "segment_drag"
+  ],
+  "timestamp": "2026-07-25T16:43:26.404424+00:00",
+  "elapsed_seconds": 28.4,
+  "pass_at_1": 0.0,
+  "signal_detection_accuracy": 0.0,
+  "scope_refusal_accuracy": null,
+  "results": [
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(growth_metrics(anomalies))",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 4, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 79, in growth_metrics\n    series = sf.data[sf.value_col].dropna()\n             ^^^^^^^\nAttributeError: 'AnomalyTable' object has no attribute 'data'\n"
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nresult = compare_segments(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(growth_metrics(anomalies))",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 4, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 79, in growth_metrics\n    series = sf.data[sf.value_col].dropna()\n             ^^^^^^^\nAttributeError: 'AnomalyTable' object has no attribute 'data'\n"
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nresult = compare_segments(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(growth_metrics(anomalies))",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 4, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 79, in growth_metrics\n    series = sf.data[sf.value_col].dropna()\n             ^^^^^^^\nAttributeError: 'AnomalyTable' object has no attribute 'data'\n"
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nresult = compare_segments(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    }
+  ]
+}

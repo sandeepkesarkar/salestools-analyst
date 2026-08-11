@@ -1,0 +1,136 @@
+{
+  "model_variant": "sales-analyst-1.5b",
+  "eval_set": "data/v1/held_out.jsonl",
+  "eval_set_size": 15,
+  "salestools_version": "1.0.0",
+  "signal_type_filter": [
+    "segment_drag"
+  ],
+  "timestamp": "2026-07-26T02:50:59.981370+00:00",
+  "elapsed_seconds": 26.8,
+  "pass_at_1": 1.0,
+  "signal_detection_accuracy": 1.0,
+  "scope_refusal_accuracy": null,
+  "results": [
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    }
+  ]
+}

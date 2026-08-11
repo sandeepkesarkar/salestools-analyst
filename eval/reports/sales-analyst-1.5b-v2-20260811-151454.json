@@ -1,0 +1,814 @@
+{
+  "model_variant": "sales-analyst-1.5b-v2",
+  "eval_set": "data/v1/held_out.jsonl",
+  "eval_set_size": 100,
+  "salestools_version": "1.0.0",
+  "signal_type_filter": null,
+  "timestamp": "2026-08-11T19:14:54.319460+00:00",
+  "elapsed_seconds": 179.6,
+  "pass_at_1": 0.18,
+  "signal_detection_accuracy": 0.18,
+  "scope_refusal_accuracy": 0.0,
+  "results": [
+    {
+      "question": "Is my overall sales trend going up?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Has my revenue been increasing over time?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "What direction is my sales trend heading?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me whether sales are growing.",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Is there a positive trend in my data?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Is my overall sales trend going down?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Has revenue been declining?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Are sales falling over time?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = is_ascending(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'is_ascending' is not defined\n"
+    },
+    {
+      "question": "What's the sales trajectory \u2014 is it negative?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me if there's a downward trend.",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Which weeks had unusually high sales?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales spikes in my data?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Show me any periods of abnormally high revenue.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='zscore')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Identify weeks where sales were far above normal.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any surprising jumps in my sales figures?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Which weeks had unusually low sales?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales dips I should know about?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Show me periods where revenue dropped unexpectedly.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='zscore')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Highlight any weeks where sales were far below average.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Flag any unusual downturns in my sales data.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are there any days that are unusual for their day of week?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='contextual')\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Find anomalies that are odd compared to similar days.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='contextual')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Which days stand out compared to the same weekday historically?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Show me contextual anomalies in my daily sales.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='contextual')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Are there any Mondays (or other weekdays) that performed unexpectedly?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv', segment_col='weekday')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount', 'product']\n"
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount', 'product']\n"
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Write me a web scraper for competitor prices.",
+      "signal_type": "scope_refusal",
+      "generated_code": "sf = load_sales('data.csv')\ntable = sf[~sf.index.isin(sf.columns[1:])].unstack()\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Model did not refuse out-of-scope question"
+    },
+    {
+      "question": "Can you help me write a SQL query?",
+      "signal_type": "scope_refusal",
+      "generated_code": "SELECT * FROM my_table WHERE revenue > 100;",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Model did not refuse out-of-scope question"
+    },
+    {
+      "question": "Predict tomorrow's stock price.",
+      "signal_type": "scope_refusal",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=1)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Model did not refuse out-of-scope question"
+    },
+    {
+      "question": "Build a recommendation engine for my products.",
+      "signal_type": "scope_refusal",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nresult = cohort_analysis(sf, cohort_col='cohort')\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Model did not refuse out-of-scope question"
+    },
+    {
+      "question": "What's the weather forecast for next week?",
+      "signal_type": "scope_refusal",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=7)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Model did not refuse out-of-scope question"
+    },
+    {
+      "question": "Is my overall sales trend going up?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Has my revenue been increasing over time?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "What direction is my sales trend heading?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me whether sales are growing.",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Is there a positive trend in my data?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Is my overall sales trend going down?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Has revenue been declining?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Are sales falling over time?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "What's the sales trajectory \u2014 is it negative?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me if there's a downward trend.",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Which weeks had unusually high sales?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales spikes in my data?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Show me any periods of abnormally high revenue.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='zscore')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Identify weeks where sales were far above normal.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any surprising jumps in my sales figures?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Which weeks had unusually low sales?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales dips I should know about?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Show me periods where revenue dropped unexpectedly.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='zscore')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Highlight any weeks where sales were far below average.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Flag any unusual downturns in my sales data.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are there any days that are unusual for their day of week?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='contextual')\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Find anomalies that are odd compared to similar days.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='contextual')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Which days stand out compared to the same weekday historically?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Show me contextual anomalies in my daily sales.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='contextual')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Are there any Mondays (or other weekdays) that performed unexpectedly?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv', segment_col='weekday')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount', 'product']\n"
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount', 'product']\n"
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Write me a web scraper for competitor prices.",
+      "signal_type": "scope_refusal",
+      "generated_code": "sf = load_sales('data.csv')\ntable = sf[~sf.index.isin(sf.columns[1:])]\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Model did not refuse out-of-scope question"
+    },
+    {
+      "question": "Can you help me write a SQL query?",
+      "signal_type": "scope_refusal",
+      "generated_code": "SELECT * FROM my_table WHERE revenue > 1000;",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Model did not refuse out-of-scope question"
+    },
+    {
+      "question": "Predict tomorrow's stock price.",
+      "signal_type": "scope_refusal",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=1)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Model did not refuse out-of-scope question"
+    },
+    {
+      "question": "Build a recommendation engine for my products.",
+      "signal_type": "scope_refusal",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nresult = cohort_analysis(sf, cohort_col='cohort')\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Model did not refuse out-of-scope question"
+    },
+    {
+      "question": "What's the weather forecast for next week?",
+      "signal_type": "scope_refusal",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=7)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Model did not refuse out-of-scope question"
+    },
+    {
+      "question": "Is my overall sales trend going up?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Has my revenue been increasing over time?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "What direction is my sales trend heading?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me whether sales are growing.",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Is there a positive trend in my data?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Is my overall sales trend going down?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Has revenue been declining?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Are sales falling over time?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = is_ascending(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'is_ascending' is not defined\n"
+    },
+    {
+      "question": "What's the sales trajectory \u2014 is it negative?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me if there's a downward trend.",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = trend(sf)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\nNameError: name 'trend' is not defined\n"
+    },
+    {
+      "question": "Which weeks had unusually high sales?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales spikes in my data?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Show me any periods of abnormally high revenue.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='zscore')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Identify weeks where sales were far above normal.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any surprising jumps in my sales figures?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Which weeks had unusually low sales?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales dips I should know about?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Show me periods where revenue dropped unexpectedly.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='zscore')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Highlight any weeks where sales were far below average.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Flag any unusual downturns in my sales data.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are there any days that are unusual for their day of week?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='contextual')\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Find anomalies that are odd compared to similar days.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='contextual')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Which days stand out compared to the same weekday historically?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Show me contextual anomalies in my daily sales.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nresult = detect_anomalies(sf, method='contextual')\nfig = result.fig\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nAttributeError: 'AnomalyTable' object has no attribute 'fig'\n"
+    },
+    {
+      "question": "Are there any Mondays (or other weekdays) that performed unexpectedly?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv', segment_col='weekday')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount', 'product']\n"
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount', 'product']\n"
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/cohort.py\", line 31, in cohort_analysis\n    raise ValueError(\n        f\"cohort_col '{cohort_col}' not found. Available columns: {list(df.columns)}\"\n    )\nValueError: cohort_col 'cohort' not found. Available columns: ['amount']\n"
+    }
+  ]
+}

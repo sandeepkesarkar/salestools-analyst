@@ -141,8 +141,8 @@ description: "Task list for Local Sales-Analyst Codegen Model"
 - [X] T040 [P] [US5] Add v2 question templates to `data/generator/questions.py`: 5 `forecast`-type templates × 5 paraphrases, 5 `cohort_analysis`-type templates × 5 paraphrases
 - [ ] T041 [US5] Generate delta dataset: `python data/generator/generate.py --salestools-version 2.0.0 --delta-from 1.0.0 --seed 42 --count 200 --output data/v2/delta.jsonl`; confirm all 200 pairs verified (depends on T039, T040, T038, T021)
 - [X] T042 [US5] Implement `training/finetune_1.5b_v2.ipynb`: continue training from `models/adapters/1.5b/` checkpoint on `data/v2/delta.jsonl` only; save updated adapter to `models/adapters/1.5b-v2/` (depends on T041, T023)
-- [ ] T043 [US5] Export v2 model: `training/export.sh MODEL_SIZE=1.5b-v2 ADAPTER_PATH=models/adapters/1.5b-v2/` → `ollama create sales-analyst-1.5b-v2` (depends on T042, T024)
-- [ ] T044 [US5] Run before/after lifecycle eval: evaluate `sales-analyst-1.5b` and `sales-analyst-1.5b-v2` on both v1 and v2 held-out questions; `python eval/compare.py` to confirm v2 model improves on v2-function questions and v1-question accuracy within 2% of v1-only model; confirm SC-007 (depends on T043, T027, T032)
+- [X] T043 [US5] Export v2 model: `training/export.sh MODEL_SIZE=1.5b-v2 ADAPTER_PATH=models/adapters/1.5b-v2/` → `ollama create sales-analyst-1.5b-v2` (depends on T042, T024)
+- [X] T044 [US5] Run before/after lifecycle eval: evaluate `sales-analyst-1.5b` and `sales-analyst-1.5b-v2` on both v1 and v2 held-out questions; `python eval/compare.py` to confirm v2 model improves on v2-function questions and v1-question accuracy within 2% of v1-only model; confirm SC-007 (depends on T043, T027, T032)
 
 **Checkpoint**: All user stories should now be independently functional.
 
