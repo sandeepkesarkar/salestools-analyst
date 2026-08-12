@@ -14,7 +14,8 @@ class SalesFrame:
     data: pd.DataFrame          # DatetimeIndex, single value column (value_col)
     date_col: str               # original column name from source CSV
     value_col: str              # original column name for the sales metric
-    freq: str                   # detected/user-supplied: 'D' | 'W' | 'M' | 'Q' | 'Y'
+    freq: str                   # canonical pandas freq: 'D' | 'W-<anchor>' (e.g. 'W-SUN',
+                                 # anchored to the data's own weekday) | 'MS' | 'QS' | 'YS'
     segment_col: Optional[str]  # product/region column, None for univariate series
     gap_flags: pd.Series        # boolean mask aligned with data.index; True = gap filled
 ```
@@ -98,7 +99,7 @@ Output of `growth_metrics()`.
 class GrowthMetrics:
     rolling_growth: pd.Series    # period-over-period % change, rolling window
     cagr: float                  # compound annual growth rate over full series
-    inflection_points: pd.Series # dates where rolling growth changes sign
+    inflection_points: list      # list of dates (pd.Timestamp) where rolling growth changes sign
     window: int                  # rolling window used
 ```
 

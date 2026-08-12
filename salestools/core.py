@@ -69,7 +69,10 @@ class AnomalyTable:
 class GrowthMetrics:
     rolling_growth: pd.Series
     cagr: float
-    inflection_points: pd.Series
+    inflection_points: list  # list of pd.Timestamp, not pd.Series — see analysis.py's
+    # growth_metrics(), which has always returned list(inflections); this annotation
+    # previously said pd.Series, contradicting both the actual runtime value and
+    # tests/unit/test_analysis.py's isinstance(..., list) assertion.
     window: int
 
 
