@@ -1,0 +1,814 @@
+{
+  "model_variant": "sales-analyst-1.5b-v2",
+  "eval_set": "data/v1/held_out.jsonl",
+  "eval_set_size": 100,
+  "salestools_version": "1.0.0",
+  "signal_type_filter": null,
+  "timestamp": "2026-08-12T16:24:47.103111+00:00",
+  "elapsed_seconds": 187.9,
+  "pass_at_1": 0.9333,
+  "signal_detection_accuracy": 0.9333,
+  "scope_refusal_accuracy": 1.0,
+  "results": [
+    {
+      "question": "Is my overall sales trend going up?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Has my revenue been increasing over time?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What direction is my sales trend heading?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me whether sales are growing.",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nfig = plot_annotated(sf, result=result)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nTypeError: plot_annotated() got an unexpected keyword argument 'result'\n"
+    },
+    {
+      "question": "Is there a positive trend in my data?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Is my overall sales trend going down?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Has revenue been declining?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are sales falling over time?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What's the sales trajectory \u2014 is it negative?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me if there's a downward trend.",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nfig = plot_annotated(sf, result=result)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nTypeError: plot_annotated() got an unexpected keyword argument 'result'\n"
+    },
+    {
+      "question": "Which weeks had unusually high sales?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales spikes in my data?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me any periods of abnormally high revenue.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='zscore')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Identify weeks where sales were far above normal.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any surprising jumps in my sales figures?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which weeks had unusually low sales?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales dips I should know about?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me periods where revenue dropped unexpectedly.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='zscore')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Highlight any weeks where sales were far below average.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Flag any unusual downturns in my sales data.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are there any days that are unusual for their day of week?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Find anomalies that are odd compared to similar days.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which days stand out compared to the same weekday historically?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me contextual anomalies in my daily sales.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are there any Mondays (or other weekdays) that performed unexpectedly?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv', segment_col='weekday')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Write me a web scraper for competitor prices.",
+      "signal_type": "scope_refusal",
+      "generated_code": "# This question is outside the scope of salestools sales analysis.",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Can you help me write a SQL query?",
+      "signal_type": "scope_refusal",
+      "generated_code": "# This question is outside the scope of salestools sales analysis.",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Predict tomorrow's stock price.",
+      "signal_type": "scope_refusal",
+      "generated_code": "# This question is outside the scope of salestools sales analysis.",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Build a recommendation engine for my products.",
+      "signal_type": "scope_refusal",
+      "generated_code": "# This question is outside the scope of salestools sales analysis.",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What's the weather forecast for next week?",
+      "signal_type": "scope_refusal",
+      "generated_code": "# This question is outside the scope of salestools sales analysis.",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Is my overall sales trend going up?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Has my revenue been increasing over time?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What direction is my sales trend heading?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me whether sales are growing.",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nfig = plot_annotated(sf, result=result)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nTypeError: plot_annotated() got an unexpected keyword argument 'result'\n"
+    },
+    {
+      "question": "Is there a positive trend in my data?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Is my overall sales trend going down?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Has revenue been declining?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are sales falling over time?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What's the sales trajectory \u2014 is it negative?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me if there's a downward trend.",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nfig = plot_annotated(sf, result=result)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nTypeError: plot_annotated() got an unexpected keyword argument 'result'\n"
+    },
+    {
+      "question": "Which weeks had unusually high sales?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales spikes in my data?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me any periods of abnormally high revenue.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='zscore')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Identify weeks where sales were far above normal.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any surprising jumps in my sales figures?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which weeks had unusually low sales?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales dips I should know about?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me periods where revenue dropped unexpectedly.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='zscore')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Highlight any weeks where sales were far below average.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Flag any unusual downturns in my sales data.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are there any days that are unusual for their day of week?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Find anomalies that are odd compared to similar days.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which days stand out compared to the same weekday historically?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me contextual anomalies in my daily sales.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are there any Mondays (or other weekdays) that performed unexpectedly?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv', segment_col='weekday')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Write me a web scraper for competitor prices.",
+      "signal_type": "scope_refusal",
+      "generated_code": "# This question is outside the scope of salestools sales analysis.",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Can you help me write a SQL query?",
+      "signal_type": "scope_refusal",
+      "generated_code": "# This question is outside the scope of salestools sales analysis.",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Predict tomorrow's stock price.",
+      "signal_type": "scope_refusal",
+      "generated_code": "# This question is outside the scope of salestools sales analysis.",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Build a recommendation engine for my products.",
+      "signal_type": "scope_refusal",
+      "generated_code": "# This question is outside the scope of salestools sales analysis.",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What's the weather forecast for next week?",
+      "signal_type": "scope_refusal",
+      "generated_code": "# This question is outside the scope of salestools sales analysis.",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Is my overall sales trend going up?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Has my revenue been increasing over time?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What direction is my sales trend heading?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me whether sales are growing.",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nfig = plot_annotated(sf, result=result)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nTypeError: plot_annotated() got an unexpected keyword argument 'result'\n"
+    },
+    {
+      "question": "Is there a positive trend in my data?",
+      "signal_type": "trend_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Is my overall sales trend going down?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Has revenue been declining?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are sales falling over time?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What's the sales trajectory \u2014 is it negative?",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me if there's a downward trend.",
+      "signal_type": "trend_down",
+      "generated_code": "sf = load_sales('data.csv')\nresult = decompose_trend(sf)\nfig = plot_annotated(sf, result=result)\nnarrate(result)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nTypeError: plot_annotated() got an unexpected keyword argument 'result'\n"
+    },
+    {
+      "question": "Which weeks had unusually high sales?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales spikes in my data?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me any periods of abnormally high revenue.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='zscore')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Identify weeks where sales were far above normal.",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any surprising jumps in my sales figures?",
+      "signal_type": "anomaly_spike",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which weeks had unusually low sales?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Were there any sales dips I should know about?",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me periods where revenue dropped unexpectedly.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='zscore')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Highlight any weeks where sales were far below average.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Flag any unusual downturns in my sales data.",
+      "signal_type": "anomaly_drop",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf)\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are there any days that are unusual for their day of week?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Find anomalies that are odd compared to similar days.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which days stand out compared to the same weekday historically?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me contextual anomalies in my daily sales.",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are there any Mondays (or other weekdays) that performed unexpectedly?",
+      "signal_type": "anomaly_contextual",
+      "generated_code": "sf = load_sales('data.csv', segment_col='weekday')\nanomalies = detect_anomalies(sf, method='contextual')\nfig = plot_annotated(sf, anomalies=anomalies)\nnarrate(anomalies)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which product is dragging my overall sales down?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which segment has the worst growth trend?",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Compare my products by sales growth and identify the laggard.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me which product or region is underperforming.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Rank my segments from best to worst growth.",
+      "signal_type": "segment_drag",
+      "generated_code": "sf = load_sales('data.csv', segment_col='product')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    }
+  ]
+}

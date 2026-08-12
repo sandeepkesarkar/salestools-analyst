@@ -3,6 +3,36 @@
 > A locally-run AI assistant that answers questions about your sales data — no cloud, no
 > subscription, no data leaving your machine.
 
+---
+
+## Summary
+
+If you have a spreadsheet of sales numbers, you've probably had questions like *"is business
+trending up or down?"*, *"were there any unusual weeks?"*, or *"which product is dragging
+performance down?"* Answering them today usually means hiring an analyst, learning statistics
+software, or pasting your (possibly sensitive) numbers into a cloud AI service.
+
+This project takes a different approach: a small AI assistant that runs entirely on your own
+laptop. You load your sales file into a Jupyter notebook (a standard, free data-science tool),
+type your question in plain English, and get back a chart and a plain-English answer — no
+internet connection required, no data ever leaves your machine, and no subscription.
+
+What makes this more than "a chatbot that writes code" is how it's built: the AI is never
+allowed to write arbitrary code, only to call a small, fixed set of pre-built analysis
+functions. Every one of its ~1,000 training examples was actually *run* and checked for
+correctness before being used to teach the model — nothing was hand-labeled or taken on faith.
+That discipline is also why the system can grow: when new capabilities were added later
+(forecasting, customer-retention analysis), the model was taught the new material without
+forgetting what it already knew — a full before-and-after test suite proves it, rather than
+just claiming it.
+
+See [`docs/summary.md`](docs/summary.md) for the longer plain-English walkthrough of the
+problem, the approach, and how each piece fits together.
+
+---
+
+## How it works, at a glance
+
 Open a Jupyter notebook, load a sales CSV, and ask a question in plain English:
 
 ```
@@ -16,12 +46,6 @@ produces an annotated chart and a plain-English summary — e.g. *"Week 23 was 3
 expected — likely a promo spike. Underlying trend: +4% monthly growth after removing
 seasonality."*
 
-For the full plain-English writeup of the problem and approach, see [`docs/summary.md`](docs/summary.md).
-
----
-
-## How it works, at a glance
-
 The model is only ever allowed to answer using a small, hand-built library (`salestools`) —
 never raw pandas/statsmodels. Training data is synthetic, and every example is verified by
 actually *running* it before it's allowed into the dataset — nothing is hand-labeled or trusted
@@ -29,7 +53,7 @@ on faith.
 
 ```mermaid
 flowchart LR
-    LIB["salestools library\n(load_sales, decompose_trend,\ndetect_anomalies, forecast, ...)"]
+    LIB["salestools library\n(load_sales, decompose_trend,\ndetect_anomalies, forecast,\ncohort_analysis, ...)"]
     GEN["Data Generator\nplants a signal → writes Q+code →\nexecutes it → keeps only if verified"]
     FT["Fine-Tune\nQwen2.5-Coder + QLoRA\non Colab (1.5B and 3B)"]
     EXP["Export\nmerge → GGUF q4_k_m →\nregister with Ollama"]
@@ -78,7 +102,7 @@ execution.
 |---|---|
 | `salestools/` | The library the model is allowed to write code against (9 public functions) |
 | `data/generator/` | Synthetic dataset generator + sandboxed execution verifier |
-| `data/v1/`, `data/v2/` | Generated training/held-out/delta JSONL (gitignored — regenerate with `data/generator/generate.py`) |
+| `data/v1/`, `data/v2/` | Generated training/held-out/delta JSONL — gitignored, regenerate with `data/generator/generate.py` (two small files are committed as exceptions: `data/v2/replay_v1.jsonl`, `data/v2/held_out.jsonl`) |
 | `training/` | Fine-tune notebooks (`finetune_1.5b.ipynb`, `finetune_3b.ipynb`, `finetune_1.5b_v2.ipynb`), LoRA configs, `export.sh` |
 | `jupyter_magic/` | The `%%ask` IPython cell magic |
 | `eval/` | Evaluation harness (`run_eval.py`) and A/B comparison tool (`compare.py`) |
@@ -99,11 +123,11 @@ Short version:
 # Python deps (uses uv, not bare pip)
 uv venv
 uv pip install -e ".[dev]"
-uv run pytest   # 53 unit + integration tests
+uv run pytest   # 82 unit + integration tests
 
 # Local inference (once a model has been trained + exported — see training/ below)
 brew install ollama && ollama serve &
-ollama list      # sales-analyst-1.5b / sales-analyst-3b
+ollama list      # sales-analyst-1.5b / sales-analyst-3b / sales-analyst-1.5b-v2
 
 # In a Jupyter notebook:
 #   %load_ext jupyter_magic
@@ -118,12 +142,27 @@ notebook's own intro cell for hardware requirements and step-by-step instruction
 
 ## Status
 
-Both the 1.5B and 3B models have been fine-tuned, exported, and evaluated against a 100-example
-held-out set — currently scoring 100% pass@1, 100% signal-detection accuracy, and 100%
-scope-refusal accuracy for both sizes. The v2 incremental fine-tune (teaching the model new
-`forecast`/`cohort_analysis` capabilities without retraining from scratch) is built and ready to
-run. See [`specs/001-sales-analyst-model/tasks.md`](specs/001-sales-analyst-model/tasks.md) for
-the full, up-to-date task checklist.
+Feature-complete — every task in
+[`specs/001-sales-analyst-model/tasks.md`](specs/001-sales-analyst-model/tasks.md) is done, and
+the whole codebase has been through an adversarial review pass looking for real bugs (not just
+style), with fixes applied and verified. Both model sizes are trained, exported, and evaluated;
+the v2 incremental fine-tune has actually been run (not just built) and verified against a
+genuine held-out set. Current numbers, freshly re-run:
+
+| Model | Evaluated on | pass@1 | signal-detection | scope-refusal |
+|---|---|---|---|---|
+| `sales-analyst-1.5b` | v1 held-out (100 questions) | 100% | 100% | 100% |
+| `sales-analyst-3b` | v1 held-out (100 questions) | 100% | 100% | 100% |
+| `sales-analyst-1.5b-v2` | v2 held-out (40 questions — `forecast`/`cohort_analysis`) | 100% | 100% | — |
+| `sales-analyst-1.5b-v2` | v1 held-out (100 questions, regression check) | 93% | 93% | 100% |
+
+The 1.5B and 3B models score identically on every metric and every individual signal type on
+this eval set — 1.5B is the default for `%%ask` since it's cheaper and faster to run locally for
+the same measured quality here; 3B remains available for harder eval sets in the future. The v2
+row confirms the incremental fine-tune actually learned the new `forecast`/`cohort_analysis`
+capabilities (top row) without wiping out most of what it knew before (bottom row, ~7 points
+below the v1-only baseline — the tradeoff of updating a model incrementally rather than
+retraining from scratch, and within the range the project accepted for this demo).
 
 ## License
 

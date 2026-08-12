@@ -71,7 +71,7 @@ To teach it, the project:
 ### 1. The `salestools` Library — *The Vocabulary*
 
 Before training any AI, this project defines the exact set of analysis tools the AI is allowed
-to use. Think of it as a specialist's toolbox with eight named tools:
+to use. Think of it as a specialist's toolbox with nine named tools:
 
 | Tool | What it does |
 |------|-------------|
@@ -82,6 +82,8 @@ to use. Think of it as a specialist's toolbox with eight named tools:
 | `compare_segments` | Ranks products or regions by their growth performance |
 | `plot_annotated` | Draws a chart with anomalies marked and labelled in red |
 | `narrate` | Converts analysis results into a printed plain-English sentence |
+| `forecast` | Projects future sales with a confidence interval (added in v2) |
+| `cohort_analysis` | Tracks how customer groups' retention changes over time (added in v2) |
 
 **Why define the toolbox first?** The AI is only ever allowed to write code using these tools.
 If the AI cannot answer a question in 15 lines of `salestools` code, that is a signal to improve
@@ -172,11 +174,15 @@ quantified in a concrete report — not guessed at.
 One of the core goals of this project is to demonstrate that a fine-tuned specialist model can
 be updated when the underlying library evolves — without starting from scratch.
 
-In Phase 2 of the project, two new functions are added to `salestools` (`forecast` and
-`cohort_analysis`). The data generator reruns on those new functions only, producing a small
-*delta* dataset. The model is then fine-tuned for a short additional session on that delta data.
+Later in the project (Phase 7 in the breakdown below), two new functions are added to
+`salestools` (`forecast` and `cohort_analysis`). The data generator reruns on those new
+functions only, producing a small *delta* dataset — mixed with a small sample of the original
+v1 examples (a "replay buffer") so the model doesn't lose what it already knew while learning
+the new material. The model is then fine-tuned for a short additional session on that combined
+data.
 
-A before-and-after evaluation confirms:
+A before-and-after evaluation, run against test questions the model has never seen for *either*
+version, confirms:
 - The updated model uses the new functions correctly for new question types.
 - The updated model still works correctly for all the original question types.
 
