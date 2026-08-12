@@ -98,9 +98,11 @@ with tempfile.NamedTemporaryFile(suffix=".csv", delete=False, mode="w") as f:
     df.to_csv(f, index=False)
     csv_path = f.name
 
-# Load
+# Load — 2023-01-01 is a Sunday, so load_sales anchors the weekly freq to "W-SUN" (matching
+# the data's own weekday; see salestools/load.py's _weekly_anchor, not a hardcoded "W-MON").
 sf = load_sales(csv_path, date_col="date", value_col="amount")
-assert sf.freq == "W-MON", f"Expected W-MON, got {sf.freq}"
+assert sf.freq == "W-SUN", f"Expected W-SUN, got {sf.freq}"
+assert len(sf.data) == 52, f"Expected 52 rows, got {len(sf.data)}"
 print(f"✅ load_sales: {len(sf.data)} rows, freq={sf.freq}")
 
 # Decompose

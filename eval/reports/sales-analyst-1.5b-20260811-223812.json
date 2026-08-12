@@ -1,0 +1,814 @@
+{
+  "model_variant": "sales-analyst-1.5b",
+  "eval_set": "data/v2/held_out.jsonl",
+  "eval_set_size": 100,
+  "salestools_version": "2.0.0",
+  "signal_type_filter": null,
+  "timestamp": "2026-08-12T02:38:12.659689+00:00",
+  "elapsed_seconds": 184.8,
+  "pass_at_1": 0.0,
+  "signal_detection_accuracy": 0.0,
+  "scope_refusal_accuracy": null,
+  "results": [
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nnf = predict_future(fm)\nnarrate(nf)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nNameError: name 'predict_future' is not defined\n"
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nfig = plot_annotated(sf, trend=fm)\nnarrate(fm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nfig = plot_annotated(gm)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 83, in growth_metrics\n    inflections = rolling_growth[\n                  ~~~~~~~~~~~~~~^\n        (sign_changes > 0) & (rolling_growth.shift(1) < 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ].index\n    ^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 989, in __getitem__\n    return self._get_rows_with_mask(key)\n           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 1026, in _get_rows_with_mask\n    new_mgr = self._mgr.get_rows_with_mask(indexer)\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/internals/managers.py\", line 2159, in get_rows_with_mask\n    array = blk.values[indexer]\n            ~~~~~~~~~~^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 1148 but size of corresponding boolean axis is 13517777\n"
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nnf = predict_future(fm)\nnarrate(nf)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nNameError: name 'predict_future' is not defined\n"
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nfig = plot_annotated(sf, trend=fm)\nnarrate(fm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nfig = plot_annotated(gm)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 83, in growth_metrics\n    inflections = rolling_growth[\n                  ~~~~~~~~~~~~~~^\n        (sign_changes > 0) & (rolling_growth.shift(1) < 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ].index\n    ^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 989, in __getitem__\n    return self._get_rows_with_mask(key)\n           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 1026, in _get_rows_with_mask\n    new_mgr = self._mgr.get_rows_with_mask(indexer)\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/internals/managers.py\", line 2159, in get_rows_with_mask\n    array = blk.values[indexer]\n            ~~~~~~~~~~^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 1120 but size of corresponding boolean axis is 13138624\n"
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nnf = predict_future(fm)\nnarrate(nf)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nNameError: name 'predict_future' is not defined\n"
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nfig = plot_annotated(sf, trend=fm)\nnarrate(fm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nfig = plot_annotated(gm)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 83, in growth_metrics\n    inflections = rolling_growth[\n                  ~~~~~~~~~~~~~~^\n        (sign_changes > 0) & (rolling_growth.shift(1) < 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ].index\n    ^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 989, in __getitem__\n    return self._get_rows_with_mask(key)\n           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 1026, in _get_rows_with_mask\n    new_mgr = self._mgr.get_rows_with_mask(indexer)\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/internals/managers.py\", line 2159, in get_rows_with_mask\n    array = blk.values[indexer]\n            ~~~~~~~~~~^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 1183 but size of corresponding boolean axis is 15212806\n"
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nnf = predict_future(fm)\nnarrate(nf)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nNameError: name 'predict_future' is not defined\n"
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nfig = plot_annotated(sf, trend=fm)\nnarrate(fm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nfig = plot_annotated(gm)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 83, in growth_metrics\n    inflections = rolling_growth[\n                  ~~~~~~~~~~~~~~^\n        (sign_changes > 0) & (rolling_growth.shift(1) < 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ].index\n    ^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 989, in __getitem__\n    return self._get_rows_with_mask(key)\n           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 1026, in _get_rows_with_mask\n    new_mgr = self._mgr.get_rows_with_mask(indexer)\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/internals/managers.py\", line 2159, in get_rows_with_mask\n    array = blk.values[indexer]\n            ~~~~~~~~~~^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 1168 but size of corresponding boolean axis is 14227116\n"
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nnf = predict_future(fm)\nnarrate(nf)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nNameError: name 'predict_future' is not defined\n"
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nfig = plot_annotated(sf, trend=fm)\nnarrate(fm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nfig = plot_annotated(gm)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 83, in growth_metrics\n    inflections = rolling_growth[\n                  ~~~~~~~~~~~~~~^\n        (sign_changes > 0) & (rolling_growth.shift(1) < 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ].index\n    ^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 989, in __getitem__\n    return self._get_rows_with_mask(key)\n           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 1026, in _get_rows_with_mask\n    new_mgr = self._mgr.get_rows_with_mask(indexer)\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/internals/managers.py\", line 2159, in get_rows_with_mask\n    array = blk.values[indexer]\n            ~~~~~~~~~~^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 1149 but size of corresponding boolean axis is 13307808\n"
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nnf = predict_future(fm)\nnarrate(nf)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nNameError: name 'predict_future' is not defined\n"
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nfig = plot_annotated(sf, trend=fm)\nnarrate(fm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nfig = plot_annotated(gm)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 83, in growth_metrics\n    inflections = rolling_growth[\n                  ~~~~~~~~~~~~~~^\n        (sign_changes > 0) & (rolling_growth.shift(1) < 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ].index\n    ^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 989, in __getitem__\n    return self._get_rows_with_mask(key)\n           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 1026, in _get_rows_with_mask\n    new_mgr = self._mgr.get_rows_with_mask(indexer)\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/internals/managers.py\", line 2159, in get_rows_with_mask\n    array = blk.values[indexer]\n            ~~~~~~~~~~^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 1105 but size of corresponding boolean axis is 12794412\n"
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nnf = predict_future(fm)\nnarrate(nf)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nNameError: name 'predict_future' is not defined\n"
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nfig = plot_annotated(sf, trend=fm)\nnarrate(fm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nfig = plot_annotated(gm)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 83, in growth_metrics\n    inflections = rolling_growth[\n                  ~~~~~~~~~~~~~~^\n        (sign_changes > 0) & (rolling_growth.shift(1) < 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ].index\n    ^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 989, in __getitem__\n    return self._get_rows_with_mask(key)\n           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 1026, in _get_rows_with_mask\n    new_mgr = self._mgr.get_rows_with_mask(indexer)\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/internals/managers.py\", line 2159, in get_rows_with_mask\n    array = blk.values[indexer]\n            ~~~~~~~~~~^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 1117 but size of corresponding boolean axis is 12833275\n"
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nnf = predict_future(fm)\nnarrate(nf)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nNameError: name 'predict_future' is not defined\n"
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nfig = plot_annotated(sf, trend=fm)\nnarrate(fm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nfig = plot_annotated(gm)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 83, in growth_metrics\n    inflections = rolling_growth[\n                  ~~~~~~~~~~~~~~^\n        (sign_changes > 0) & (rolling_growth.shift(1) < 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ].index\n    ^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 989, in __getitem__\n    return self._get_rows_with_mask(key)\n           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 1026, in _get_rows_with_mask\n    new_mgr = self._mgr.get_rows_with_mask(indexer)\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/internals/managers.py\", line 2159, in get_rows_with_mask\n    array = blk.values[indexer]\n            ~~~~~~~~~~^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 1115 but size of corresponding boolean axis is 12872953\n"
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nnf = predict_future(fm)\nnarrate(nf)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nNameError: name 'predict_future' is not defined\n"
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nfig = plot_annotated(sf, trend=fm)\nnarrate(fm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nfig = plot_annotated(gm)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 83, in growth_metrics\n    inflections = rolling_growth[\n                  ~~~~~~~~~~~~~~^\n        (sign_changes > 0) & (rolling_growth.shift(1) < 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ].index\n    ^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 989, in __getitem__\n    return self._get_rows_with_mask(key)\n           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 1026, in _get_rows_with_mask\n    new_mgr = self._mgr.get_rows_with_mask(indexer)\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/internals/managers.py\", line 2159, in get_rows_with_mask\n    array = blk.values[indexer]\n            ~~~~~~~~~~^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 1142 but size of corresponding boolean axis is 14029564\n"
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nnf = predict_future(fm)\nnarrate(nf)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 3, in <module>\nNameError: name 'predict_future' is not defined\n"
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nfm = decompose_trend(sf)\nfig = plot_annotated(sf, trend=fm)\nnarrate(fm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nforecast = decompose_trend(sf)\nnarrate(forecast)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Code ran cleanly but planted signal was not detected"
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='customer_id')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\nranking = compare_segments(sf)\nnarrate(ranking)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/segments.py\", line 18, in compare_segments\n    raise ValueError(\n        \"No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\"\n    )\nValueError: No segment column available. Pass `by='column_name'` or load data with `segment_col` set.\n"
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv')\ngm = growth_metrics(sf)\nfig = plot_annotated(gm)\nnarrate(gm)",
+      "passed": false,
+      "signal_detected": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/sandeep_a_k/src/salestools-analyst/data/generator/verify.py\", line 42, in _run_code_worker\n    exec(exec_code, namespace)  # noqa: S102\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in <module>\n  File \"/Users/sandeep_a_k/src/salestools-analyst/salestools/analysis.py\", line 83, in growth_metrics\n    inflections = rolling_growth[\n                  ~~~~~~~~~~~~~~^\n        (sign_changes > 0) & (rolling_growth.shift(1) < 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ].index\n    ^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 989, in __getitem__\n    return self._get_rows_with_mask(key)\n           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/series.py\", line 1026, in _get_rows_with_mask\n    new_mgr = self._mgr.get_rows_with_mask(indexer)\n  File \"/Users/sandeep_a_k/src/salestools-analyst/.venv/lib/python3.13/site-packages/pandas/core/internals/managers.py\", line 2159, in get_rows_with_mask\n    array = blk.values[indexer]\n            ~~~~~~~~~~^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 1122 but size of corresponding boolean axis is 13190642\n"
+    }
+  ]
+}
