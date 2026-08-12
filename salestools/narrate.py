@@ -41,7 +41,7 @@ def _narrate_growth(gm: GrowthMetrics) -> None:
     if math.isnan(gm.cagr):
         print("No notable findings. Could not compute growth rate.")
         return
-    direction = "upward" if gm.cagr > 0 else "downward"
+    direction = "upward" if gm.cagr > 0 else "downward" if gm.cagr < 0 else "flat"
     print(
         f"Overall trend: {direction} — compound annual growth rate of {gm.cagr:.1%}. "
         f"Rolling {gm.window}-period growth tracked {len(gm.rolling_growth)} data points. "

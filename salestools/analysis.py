@@ -79,11 +79,13 @@ def growth_metrics(sf: SalesFrame, window: int = 4) -> GrowthMetrics:
     else:
         cagr = float("nan")
 
-    sign_changes = rolling_growth.diff().dropna()
-    inflections = rolling_growth[
-        (sign_changes > 0) & (rolling_growth.shift(1) < 0)
-        | (sign_changes < 0) & (rolling_growth.shift(1) > 0)
-    ].index
+    # A true inflection point is where rolling_growth actually crosses zero — current
+    # and previous values have opposite sign, so their product is negative. (An earlier
+    # version compared the *derivative* of rolling_growth against the previous value
+    # instead of comparing consecutive values' signs directly, which fired on every step
+    # adjacent to a real crossing too — e.g. growth moving -2 → -1 → 3 flagged both -1
+    # and 3 as inflections, even though -1 never actually crossed zero.)
+    inflections = rolling_growth[(rolling_growth * rolling_growth.shift(1)) < 0].index
 
     return GrowthMetrics(
         rolling_growth=rolling_growth,

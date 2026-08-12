@@ -59,7 +59,13 @@ def cohort_analysis(sf: SalesFrame, cohort_col: str) -> CohortTable:
 
 
 def _median_gap_days(dates: pd.Series) -> int:
-    diffs = dates.sort_values().diff().dropna().dt.days
+    # Must dedupe before diffing: cohort data has multiple rows per calendar period
+    # (one per active cohort member), so diffing the raw per-row column is dominated
+    # by same-date (0-day) gaps between rows and collapses the median toward 0 —
+    # floored to 1, which turns period_offset into a raw day-count instead of an
+    # actual period count (e.g. weekly cohorts end up labeled "P7", "P14", ... instead
+    # of "P1", "P2", ...).
+    diffs = dates.drop_duplicates().sort_values().diff().dropna().dt.days
     return max(1, int(diffs.median())) if len(diffs) else 1
 
 

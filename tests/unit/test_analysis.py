@@ -90,3 +90,21 @@ class TestGrowthMetrics:
         sf = _make_sf(n=52)
         result = growth_metrics(sf)
         assert isinstance(result.inflection_points, list)
+
+    def test_inflection_points_only_flag_actual_sign_changes(self):
+        """Regression test: inflection detection used to compare the *derivative* of
+        rolling_growth against the previous value instead of comparing consecutive
+        values' signs directly, which flagged every point adjacent to a real crossing
+        too. Growth moving -20% -> -10% -> +30% -> +20% -> -10% -> -30% only actually
+        crosses zero twice (3rd and 5th values); the old logic also flagged the 2nd
+        and 4th values, which never cross zero."""
+        dates = pd.date_range("2022-01-03", periods=7, freq="W-MON")
+        vals = [100.0]
+        for g in [-0.20, -0.10, 0.30, 0.20, -0.10, -0.30]:
+            vals.append(vals[-1] * (1 + g))
+        df = pd.DataFrame({"amount": vals}, index=dates)
+        sf = SalesFrame(data=df, date_col="date", value_col="amount", freq="W-MON")
+
+        result = growth_metrics(sf, window=1)
+
+        assert result.inflection_points == [dates[3], dates[5]]

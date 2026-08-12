@@ -98,6 +98,16 @@ class TestNarrateGrowthMetrics:
         out = capsys.readouterr().out
         assert "upward" in out or "up" in out.lower()
 
+    def test_zero_cagr_is_flat_not_downward(self, capsys):
+        """Regression test: exactly 0% CAGR used to be labeled "downward" since the
+        old check was `cagr > 0 else "downward"`, with no separate flat case."""
+        gm = _make_growth_metrics()
+        gm.cagr = 0.0
+        narrate(gm)
+        out = capsys.readouterr().out
+        assert "flat" in out.lower()
+        assert "downward" not in out.lower()
+
 
 class TestNarrateSegmentRanking:
     def test_shows_top_segment(self, capsys):
