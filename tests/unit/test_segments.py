@@ -69,6 +69,35 @@ def test_trend_direction_columns_present():
     assert "cagr" in result.summary.columns
 
 
+def test_cagr_magnitude_is_sane_for_weekly_data():
+    """A ~52-week series with a modest slope must not produce triple-digit CAGRs.
+
+    Regression test: compare_segments() used to look up periods-per-year from a dict
+    keyed on plain "W", which never matched the canonical "W-MON"/"W-SUN" freq strings
+    SalesFrame.freq actually holds, silently defaulting to 365 and inflating the CAGR
+    exponent (1/years) roughly 7x for weekly data.
+    """
+    sf = _multi_segment_sf()
+    result = compare_segments(sf)
+    assert result.summary["cagr"].abs().max() < 3.0
+
+
+def test_cagr_magnitude_matches_regardless_of_weekly_anchor():
+    """A Sunday-anchored (W-SUN) series must produce the same CAGR as the equivalent
+    Monday-anchored (W-MON) one — periods_per_year() must match any "W-*" anchor."""
+    sf_mon = _multi_segment_sf()
+    sf_sun = SalesFrame(
+        data=sf_mon.data,
+        date_col=sf_mon.date_col,
+        value_col=sf_mon.value_col,
+        freq="W-SUN",
+        segment_col=sf_mon.segment_col,
+    )
+    cagr_mon = compare_segments(sf_mon).summary.set_index("segment")["cagr"]
+    cagr_sun = compare_segments(sf_sun).summary.set_index("segment")["cagr"]
+    pd.testing.assert_series_equal(cagr_mon, cagr_sun)
+
+
 def test_raises_value_error_without_segment_col(tmp_path):
     dates = pd.date_range("2022-01-03", periods=20, freq="W-MON")
     df = pd.DataFrame({"date": dates, "amount": 100.0})

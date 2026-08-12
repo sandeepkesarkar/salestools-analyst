@@ -15,7 +15,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7.4", "pytest-cov"]
+jupyter = ["ipython>=8.0"]
+dev = ["pytest>=7.4", "pytest-cov", "ipython>=8.0"]
 
 [tool.setuptools.packages.find]
 where = ["."]

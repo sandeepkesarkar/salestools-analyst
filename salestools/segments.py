@@ -5,7 +5,7 @@ from typing import Literal, Optional
 import numpy as np
 import pandas as pd
 
-from salestools.core import SalesFrame, SegmentRanking
+from salestools.core import SalesFrame, SegmentRanking, periods_per_year
 
 
 def compare_segments(
@@ -21,8 +21,7 @@ def compare_segments(
     if seg_col not in sf.data.columns:
         raise ValueError(f"Segment column '{seg_col}' not found in SalesFrame.data.")
 
-    freq_periods = {"D": 365, "W": 52, "M": 12, "Q": 4, "Y": 1}
-    periods_per_year = freq_periods.get(sf.freq, 365)
+    ppy = periods_per_year(sf.freq)
 
     rows = []
     for segment, group in sf.data.groupby(seg_col):
@@ -31,7 +30,7 @@ def compare_segments(
             continue
 
         n = len(vals)
-        years = n / periods_per_year
+        years = n / ppy
         if vals.iloc[0] > 0 and years > 0:
             cagr = float((vals.iloc[-1] / vals.iloc[0]) ** (1 / years) - 1)
         else:

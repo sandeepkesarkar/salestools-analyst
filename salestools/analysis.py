@@ -8,15 +8,7 @@ import numpy as np
 import pandas as pd
 from statsmodels.tsa.seasonal import STL
 
-from salestools.core import DecompositionResult, GrowthMetrics, SalesFrame
-
-_PERIOD_MAP = {
-    "D": 7,
-    "W": 52, "W-MON": 52, "W-SUN": 52,
-    "M": 12, "MS": 12,
-    "Q": 4,  "QS": 4,
-    "Y": 1,  "YS": 1,
-}
+from salestools.core import DecompositionResult, GrowthMetrics, SalesFrame, periods_per_year, seasonal_period
 
 
 def decompose_trend(
@@ -26,7 +18,7 @@ def decompose_trend(
     series = sf.data[sf.value_col].dropna()
 
     if period == "auto":
-        resolved_period = _PERIOD_MAP.get(sf.freq, 7)
+        resolved_period = seasonal_period(sf.freq)
     else:
         resolved_period = int(period)
 
@@ -82,9 +74,7 @@ def growth_metrics(sf: SalesFrame, window: int = 4) -> GrowthMetrics:
 
     n_periods = len(series)
     if n_periods >= 2 and series.iloc[0] > 0:
-        _PER_YEAR = {"D": 365, "W": 52, "W-MON": 52, "W-SUN": 52,
-                     "M": 12, "MS": 12, "Q": 4, "QS": 4, "Y": 1, "YS": 1}
-        years = n_periods / _PER_YEAR.get(sf.freq, 365)
+        years = n_periods / periods_per_year(sf.freq)
         cagr = float((series.iloc[-1] / series.iloc[0]) ** (1 / max(years, 0.01)) - 1)
     else:
         cagr = float("nan")

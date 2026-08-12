@@ -2,11 +2,16 @@
 """Side-by-side comparison of two EvalReport JSON files.
 
 Usage:
-    python eval/compare.py eval/reports/1.5b-*.json eval/reports/3b-*.json
+    # Globs resolve to the most recent match (sorted lexicographically) — note the "2*"
+    # after "1.5b-": report filenames are "<model>-<timestamp>.json", and "sales-analyst-1.5b-"
+    # is itself a prefix of "sales-analyst-1.5b-v2-*.json", so an unqualified "1.5b-*.json"
+    # would also match (and, being sorted after any date-prefixed name, silently prefer) the
+    # v2 continual-FT reports.
+    python eval/compare.py eval/reports/sales-analyst-1.5b-2*.json eval/reports/sales-analyst-3b-2*.json
 
     # Or explicit paths:
-    python eval/compare.py eval/reports/sales-analyst-1.5b-20240101.json \\
-                           eval/reports/sales-analyst-3b-20240101.json
+    python eval/compare.py eval/reports/sales-analyst-1.5b-20240101-000000.json \\
+                           eval/reports/sales-analyst-3b-20240101-000000.json
 """
 from __future__ import annotations
 

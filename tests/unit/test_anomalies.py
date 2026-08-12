@@ -99,6 +99,14 @@ class TestAutoMethod:
         result = detect_anomalies(sf)
         assert result.method == "contextual"
 
+    def test_weekly_uses_contextual(self):
+        """Regression test: method="auto" used to check `sf.freq in ("D", "W")`, which
+        never matched canonical weekly freqs like "W-MON"/"W-SUN", so auto silently fell
+        back to zscore for all weekly data instead of the intended contextual method."""
+        sf = _flat_sf(spike_idx=50)
+        result = detect_anomalies(sf)
+        assert result.method == "contextual"
+
     def test_never_raises(self):
         sf = _flat_sf()
         detect_anomalies(sf, method="auto")

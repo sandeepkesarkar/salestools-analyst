@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
 
-from salestools.core import SalesFrame
+from salestools.core import SalesFrame, seasonal_period
 
 
 @dataclass
@@ -27,9 +27,13 @@ def forecast(sf: SalesFrame, horizon: int = 12) -> ForecastResult:
     if len(series) < 4:
         raise ValueError(f"Need at least 4 observations to forecast, got {len(series)}.")
 
-    # Choose seasonal periods based on freq
-    _PERIOD = {"D": 7, "W-MON": 52, "MS": 12, "QS": 4, "YS": 1}
-    seasonal_periods = _PERIOD.get(sf.freq, 1)
+    # Choose seasonal periods based on freq — default of 1 (no seasonal component) for an
+    # unrecognized freq is intentional: better to skip seasonality than force a wrong period.
+    seasonal_periods = seasonal_period(sf.freq, default=1)
+    # Holt-Winters' heuristic seasonal initialization needs 2 full cycles of data; fall back
+    # to a non-seasonal fit rather than crash on a plausible input like 1 year of weekly data.
+    if len(series) < 2 * seasonal_periods:
+        seasonal_periods = 1
 
     trend_type = "add"
     seasonal_type = "add" if seasonal_periods > 1 else None

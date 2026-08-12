@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 
-from salestools.core import AnomalyTable, SalesFrame
+from salestools.core import AnomalyTable, SalesFrame, is_sub_monthly
 
 
 def _empty_table(method: str, threshold: float) -> AnomalyTable:
@@ -64,7 +64,7 @@ def _iforest_detect(series: pd.Series) -> pd.DataFrame:
 
 def _contextual_detect(series: pd.Series, freq: str, threshold: float) -> pd.DataFrame:
     df = series.to_frame("value")
-    if freq in ("D", "W"):
+    if is_sub_monthly(freq):
         df["bucket"] = df.index.dayofweek
     else:
         df["bucket"] = df.index.month
@@ -90,7 +90,7 @@ def detect_anomalies(
     series = sf.data[sf.value_col].dropna()
 
     if method == "auto":
-        method = "contextual" if sf.freq in ("D", "W") and sf.segment_col is None else "zscore"
+        method = "contextual" if is_sub_monthly(sf.freq) and sf.segment_col is None else "zscore"
 
     if method == "zscore":
         t = threshold if threshold is not None else 3.0

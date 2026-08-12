@@ -122,7 +122,7 @@ description: "Task list for Local Sales-Analyst Codegen Model"
 **Independent Test**: `%%ask "which product is dragging sales down?"` on `tests/fixtures/multi_product.csv` → generated code identifies the planted underperformer.
 
 - [X] T034 [US3] Create `tests/fixtures/multi_product.csv`: 3-product weekly dataset (52 weeks); product A CAGR +8%, product B CAGR +3%, product C CAGR −5% (planted underperformer); use seed=7000 for reproducibility
-- [ ] T035 [US3] Run segment validation: `python eval/run_eval.py --model sales-analyst-1.5b --held-out data/v1/held_out.jsonl --signal-type segment_drag`; confirm `signal_detection_accuracy ≥ 0.75`; manually run quickstart.md Phase 1 multi-product scenario to confirm `%%ask` identifies product C (depends on T027, T034)
+- [X] T035 [US3] Run segment validation: `python eval/run_eval.py --model sales-analyst-1.5b --held-out data/v1/held_out.jsonl --signal-type segment_drag`; confirm `signal_detection_accuracy ≥ 0.75`; manually run quickstart.md Phase 1 multi-product scenario to confirm `%%ask` identifies product C (depends on T027, T034)
 
 **Checkpoint**: At this point, User Stories 1, 2, 3, and 4 should all be independently functional.
 
@@ -159,7 +159,7 @@ description: "Task list for Local Sales-Analyst Codegen Model"
 - [X] T049 [P] Add unit tests for `narrate()` for each result type and "No notable findings." empty case in `tests/unit/test_narrate.py`
 - [X] T050 Add integration smoke test in `tests/integration/test_generator_smoke.py`: run `generate.py --count 10 --seed 1` and assert 10 pairs returned, all `verified=true`, all `code` ≤15 lines (depends on T021)
 - [X] T051 [P] Add `ModelArtifact` JSON generation to `training/export.sh`: write `models/gguf/<name>.meta.json` with `model_name`, `parameter_size`, `base_model`, `salestools_version`, `quantization`, `lora_rank`, `lora_alpha`, `training_seed`, `colab_hardware`, `training_minutes`, `gguf_path`
-- [ ] T052 Run quickstart.md end-to-end validation: execute all 6 phases sequentially; fix any gaps found; mark quickstart steps as verified
+- [X] T052 Run quickstart.md end-to-end validation: execute all 6 phases sequentially; fix any gaps found; mark quickstart steps as verified
 
 ---
 

@@ -27,6 +27,19 @@ def test_load_infers_weekly_freq(tmp_path):
     assert sf.freq == "W-MON"
 
 
+def test_load_infers_weekly_freq_non_monday_anchor(tmp_path):
+    """Reindexing must follow the data's own weekday anchor, not assume Monday —
+    otherwise every date "misses" the regenerated index and gets doubled with a
+    spurious NaN filler row (see salestools/load.py's _weekly_anchor)."""
+    dates = pd.date_range("2022-01-02", periods=52, freq="W-SUN")  # Sunday-anchored
+    df = pd.DataFrame({"date": dates, "amount": 100.0})
+    p = tmp_path / "weekly_sunday.csv"
+    df.to_csv(p, index=False)
+    sf = load_sales(p)
+    assert sf.freq == "W-SUN"
+    assert len(sf.data) == 52
+
+
 def test_load_infers_monthly_freq(tmp_path):
     dates = pd.date_range("2022-01-01", periods=24, freq="MS")
     df = pd.DataFrame({"date": dates, "amount": 100.0})

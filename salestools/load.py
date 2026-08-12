@@ -9,10 +9,25 @@ import pandas as pd
 from salestools.core import SalesFrame
 
 _FREQ_MAP = {"D": 1, "W": 7, "M": 30, "Q": 91, "Y": 365}  # approx days
-_MEDIAN_TO_FREQ = [(1.5, "D"), (10, "W-MON"), (35, "MS"), (100, "QS"), (400, "YS")]
+_MEDIAN_TO_FREQ = [(1.5, "D"), (10, "W"), (35, "MS"), (100, "QS"), (400, "YS")]
 
-# Canonical pandas freq strings (avoids deprecated single-letter aliases in pandas 2.2+)
-_FREQ_CANONICAL = {"W": "W-MON", "M": "MS", "Q": "QS", "Y": "YS", "D": "D"}
+# Canonical pandas freq strings (avoids deprecated single-letter aliases in pandas 2.2+).
+# Weekly is deliberately absent here — pandas anchored-weekly freqs are named after the
+# week's last day (e.g. "W-SUN"), and hardcoding one anchor (as an earlier version of this
+# code did with "W-MON") silently corrupts reindexing for any data anchored to a different
+# weekday: dates that don't fall on the assumed anchor never match the regenerated full
+# index, so every period looks "missing" and gets an extra NaN filler row alongside the
+# real one. See _weekly_anchor, which detects the anchor from the data instead.
+_FREQ_CANONICAL = {"M": "MS", "Q": "QS", "Y": "YS", "D": "D"}
+
+_DOW_ABBR = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+
+
+def _weekly_anchor(dates: pd.DatetimeIndex) -> str:
+    """Pick the pandas anchored-weekly freq (e.g. "W-SUN") matching the data's own
+    weekday, so reindexing lines up with observed dates instead of assuming Monday."""
+    dow = dates.dayofweek.value_counts().idxmax()
+    return f"W-{_DOW_ABBR[dow]}"
 
 
 def _infer_freq(dates: pd.DatetimeIndex) -> str:
@@ -93,7 +108,10 @@ def load_sales(
     # data), which would corrupt a diff-based median-gap estimate.
     unique_dates = pd.DatetimeIndex(df[date_col].drop_duplicates().sort_values())
     raw_freq = freq or _infer_freq(unique_dates)
-    detected_freq = _FREQ_CANONICAL.get(raw_freq, raw_freq)
+    if raw_freq == "W":
+        detected_freq = _weekly_anchor(unique_dates)
+    else:
+        detected_freq = _FREQ_CANONICAL.get(raw_freq, raw_freq)
 
     if has_segment:
         # Reindex each segment independently, within its own observed date
