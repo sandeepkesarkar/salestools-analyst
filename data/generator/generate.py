@@ -36,7 +36,7 @@ HELD_OUT_SEED_RANGE = (9000, 9999)
 
 
 def _is_v1_only(signal_type: str) -> bool:
-    return signal_type not in ("forecast_up", "forecast_down", "cohort_question")
+    return signal_type not in ("forecast_up", "cohort_question")
 
 
 def generate(
@@ -67,7 +67,11 @@ def generate(
             for signal_type in types:
                 if written >= count:
                     break
-                maker = SIGNAL_MAKERS[signal_type]
+                maker = SIGNAL_MAKERS.get(signal_type)
+                if maker is None:
+                    raise ValueError(
+                        f"Unknown signal_type: {signal_type!r}. Valid: {list(SIGNAL_MAKERS)}"
+                    )
                 templates = get_questions(signal_type)
 
                 for paraphrase_id, tmpl in enumerate(templates):

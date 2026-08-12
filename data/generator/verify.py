@@ -81,7 +81,7 @@ def _detect(namespace: dict, signal_type: str) -> bool:
                 if seg == "C":
                     return True
 
-        elif signal_type in ("forecast_up", "forecast_down"):
+        elif signal_type == "forecast_up":
             if hasattr(obj, "forecast_series") and hasattr(obj.forecast_series, "__len__"):
                 if len(obj.forecast_series) > 0:
                     return True
