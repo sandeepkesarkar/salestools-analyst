@@ -117,7 +117,11 @@ echo "==> Step 6: Writing ModelArtifact JSON..."
 LORA_RANK=$(uv run python3 -c "import yaml; print(yaml.safe_load(open('${CONFIG_PATH}'))['lora']['r'])")
 LORA_ALPHA=$(uv run python3 -c "import yaml; print(yaml.safe_load(open('${CONFIG_PATH}'))['lora']['lora_alpha'])")
 SEED=$(uv run python3 -c "import yaml; print(yaml.safe_load(open('${CONFIG_PATH}'))['training']['seed'])")
-SALESTOOLS_VERSION=$(uv run python3 -c "import salestools; print(salestools.__version__)" 2>/dev/null || echo "1.0.0")
+# Fallback is "unknown", not a hardcoded version string — a stale-looking-but-wrong
+# version (e.g. an old "1.0.0" left over from before a version bump) would silently
+# mislead ModelArtifact consumers if `import salestools` ever fails here, whereas
+# "unknown" is an obvious signal something went wrong.
+SALESTOOLS_VERSION=$(uv run python3 -c "import salestools; print(salestools.__version__)" 2>/dev/null || echo "unknown")
 GGUF_SIZE=$(du -sh "${GGUF_QUANT}" 2>/dev/null | cut -f1 || echo "unknown")
 CREATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
