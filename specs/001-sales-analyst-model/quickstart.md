@@ -305,6 +305,19 @@ python data/generator/sample_replay.py \
   --seed 42 \
   --output data/v2/replay_v1.jsonl
 
+# Generate a genuine v2 held-out set — disjoint from delta.jsonl's train-range seed (42) above,
+# using the reserved held-out seed range (9000+) that data/v1/held_out.jsonl already follows.
+# Committed to the repo (small, like replay_v1.jsonl above) so it's normally already present —
+# only needed if it's ever missing. Evaluating against delta.jsonl instead would only measure
+# memorization of the model's own training data, not generalization.
+python data/generator/generate.py \
+  --salestools-version 2.0.0 \
+  --delta-from 1.0.0 \
+  --split held_out \
+  --seed 9000 \
+  --count 40 \
+  --output data/v2/held_out.jsonl
+
 # Run v2 fine-tune (training/finetune_1.5b_v2.ipynb, in Colab)
 
 # Evaluate the before (v1) and after (v2) model on both v1 and v2 held-out questions — four

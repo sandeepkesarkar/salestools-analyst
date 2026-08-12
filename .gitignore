@@ -4,6 +4,10 @@ data/v2/*.jsonl
 # ...except the small, versioned continual-FT replay buffer (sampled from data/v1/train.jsonl,
 # committed so Colab has it without needing to regenerate the full v1 set)
 !data/v2/replay_v1.jsonl
+# ...and a genuine v2 held-out set (seeds 9000+, disjoint from delta.jsonl's train-range seed 42)
+# — delta.jsonl is training data, so evaluating against it measures memorization, not
+# generalization; this is what finetune_1.5b_v2.ipynb's Next Steps now points eval at instead.
+!data/v2/held_out.jsonl
 
 # Model artifacts (large binary files)
 models/gguf/

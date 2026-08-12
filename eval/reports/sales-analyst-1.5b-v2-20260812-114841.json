@@ -1,0 +1,334 @@
+{
+  "model_variant": "sales-analyst-1.5b-v2",
+  "eval_set": "data/v2/held_out.jsonl",
+  "eval_set_size": 40,
+  "salestools_version": "2.0.0",
+  "signal_type_filter": null,
+  "timestamp": "2026-08-12T15:48:41.971774+00:00",
+  "elapsed_seconds": 78.5,
+  "pass_at_1": 1.0,
+  "signal_detection_accuracy": 1.0,
+  "scope_refusal_accuracy": null,
+  "results": [
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=3)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=6)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nfig = result.fig\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nfig = table.fig\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=3)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=6)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nfig = result.fig\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nfig = table.fig\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=3)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=6)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nfig = result.fig\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nfig = table.fig\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What will my sales look like over the next 12 months?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Can you forecast my revenue for the next quarter?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=3)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Project my sales trend forward for the next 6 periods.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=6)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me a sales forecast with confidence intervals.",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nfig = result.fig\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "What does the model predict for my future sales?",
+      "signal_type": "forecast_up",
+      "generated_code": "sf = load_sales('data.csv')\nresult = forecast(sf, horizon=12)\nnarrate(result)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "How is customer retention trending across cohorts?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Show me a cohort retention analysis.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Which customer cohort has the best retention?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Are later cohorts retaining customers better than earlier ones?",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    },
+    {
+      "question": "Build a cohort analysis heatmap for my sales data.",
+      "signal_type": "cohort_question",
+      "generated_code": "sf = load_sales('data.csv', segment_col='cohort')\ntable = cohort_analysis(sf, cohort_col='cohort')\nfig = table.fig\nnarrate(table)",
+      "passed": true,
+      "signal_detected": true,
+      "error": ""
+    }
+  ]
+}
