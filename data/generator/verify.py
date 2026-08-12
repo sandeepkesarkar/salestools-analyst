@@ -100,11 +100,20 @@ def verify_pair(
     _detection_fn,  # kept for API compat but detection is now done inline by signal_type
     timeout: int = 30,
     signal_type: str = "",
-) -> tuple[bool, str]:
-    """Verify a (code, dataset) pair. Returns (passed, error_message)."""
+) -> tuple[bool, bool, str]:
+    """Verify a (code, dataset) pair.
+
+    Returns (ran_ok, detected_ok, error_message) — kept as two separate booleans
+    rather than one combined flag because callers need them for different purposes:
+    the data generator wants a single AND (only keep a pair if it both ran cleanly
+    and detected the right signal), but the eval harness reports them as two
+    distinct metrics (pass@1 vs signal_detection_accuracy) and conflating them here
+    would make it impossible for eval to tell "crashed" apart from "ran cleanly but
+    detected the wrong thing".
+    """
     stripped = code.strip()
     if stripped.startswith("#") and ("outside" in stripped.lower() or "scope" in stripped.lower()):
-        return True, ""
+        return True, True, ""
 
     with tempfile.NamedTemporaryFile(suffix=".csv", delete=False, mode="w") as f:
         dataset.to_csv(f, index=False)
@@ -124,16 +133,16 @@ def verify_pair(
         if proc.is_alive():
             proc.terminate()
             proc.join(2)
-            return False, f"Timeout after {timeout}s"
+            return False, False, f"Timeout after {timeout}s"
 
         if queue.empty():
-            return False, "Worker produced no result (likely crashed on import)"
+            return False, False, "Worker produced no result (likely crashed on import)"
 
         success, detected, error = queue.get_nowait()
         if not success:
-            return False, error
+            return False, False, error
         if not detected:
-            return False, "Code ran cleanly but planted signal was not detected"
-        return True, ""
+            return True, False, "Code ran cleanly but planted signal was not detected"
+        return True, True, ""
     finally:
         os.unlink(csv_path)

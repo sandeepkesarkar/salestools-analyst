@@ -77,9 +77,9 @@ def generate(
                     code = tmpl["code"]
                     question = tmpl["q"]
 
-                    passed, error = verify_pair(code, dataset, detection_fn, signal_type=signal_type)
+                    ran_ok, detected_ok, error = verify_pair(code, dataset, detection_fn, signal_type=signal_type)
 
-                    if passed:
+                    if ran_ok and detected_ok:
                         pair = TrainingPair(
                             question=question,
                             code=code,

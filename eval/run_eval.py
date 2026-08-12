@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import time
 import urllib.error
@@ -35,6 +36,16 @@ from data.generator.verify import verify_pair
 
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
+
+# Exact regex from contracts/evalreport-schema.md's scope_refusal_accuracy definition.
+_REFUSAL_INDICATOR = re.compile(r"out.of.scope|outside.*scope|cannot|not.*support", re.IGNORECASE)
+
+# Public salestools functions a real (non-refusal) answer would call — used to check
+# the contract's other requirement, "contains no callable salestools function".
+_SALESTOOLS_FUNCTIONS = (
+    "load_sales", "decompose_trend", "growth_metrics", "detect_anomalies",
+    "compare_segments", "plot_annotated", "narrate", "forecast", "cohort_analysis",
+)
 
 
 def _query_ollama(question: str, model: str, temperature: float = 0.1) -> tuple[str, str]:
@@ -67,10 +78,16 @@ def _query_ollama(question: str, model: str, temperature: float = 0.1) -> tuple[
 
 
 def _is_scope_refusal(code: str) -> bool:
+    """Per contracts/evalreport-schema.md: a refusal is code that contains no callable
+    salestools function AND contains a refusal indicator matching the documented
+    regex. (An earlier version only checked for the literal substrings "outside" or
+    "scope", missing the contract's "cannot" and "not.*support" alternatives — a
+    model refusing with e.g. "# Cannot answer this, not supported" would have been
+    incorrectly scored as a failure.)"""
     stripped = code.strip()
-    return stripped.startswith("#") and (
-        "outside" in stripped.lower() or "scope" in stripped.lower()
-    )
+    has_refusal_indicator = bool(_REFUSAL_INDICATOR.search(stripped))
+    has_callable_function = any(f"{fn}(" in stripped for fn in _SALESTOOLS_FUNCTIONS)
+    return has_refusal_indicator and not has_callable_function
 
 
 def run_eval(
@@ -101,6 +118,7 @@ def run_eval(
     results = []
     pass_count = 0
     signal_detected = 0
+    non_refusal_total = 0
     refusal_correct = 0
     refusal_total = 0
     start_time = time.time()
@@ -119,12 +137,13 @@ def run_eval(
         is_refusal = _is_scope_refusal(code)
 
         if expected_signal == "scope_refusal":
+            # Per contracts/evalreport-schema.md, scope_refusal pairs are excluded
+            # from pass@1 and signal_detection_accuracy entirely — they only feed
+            # scope_refusal_accuracy, computed separately below.
             refusal_total += 1
             refusal_ok = is_refusal
             if refusal_ok:
                 refusal_correct += 1
-                pass_count += 1
-                signal_detected += 1
             result_entry = {
                 "question": question,
                 "signal_type": expected_signal,
@@ -134,6 +153,7 @@ def run_eval(
                 "error": "" if refusal_ok else "Model did not refuse out-of-scope question",
             }
         else:
+            non_refusal_total += 1
             # Make a dummy dataset using seed from pair for sandbox execution
             seed = pair.get("dataset_seed", 0)
             maker = SIGNAL_MAKERS.get(expected_signal)
@@ -152,20 +172,26 @@ def run_eval(
                 continue
 
             dataset, detection_fn = maker(seed)
-            passed, error = verify_pair(
+            # ran_ok: code executed without raising (pass@1). detected_ok: code also
+            # correctly identified the planted signal (signal_detection_accuracy) —
+            # these are deliberately two separate booleans, not one combined flag,
+            # per contracts/evalreport-schema.md's distinct definitions of the two
+            # metrics (see verify_pair()'s docstring for why).
+            ran_ok, detected_ok, error = verify_pair(
                 code, dataset, detection_fn, signal_type=expected_signal
             )
 
-            if passed:
+            if ran_ok:
                 pass_count += 1
+            if detected_ok:
                 signal_detected += 1
 
             result_entry = {
                 "question": question,
                 "signal_type": expected_signal,
                 "generated_code": code,
-                "passed": passed,
-                "signal_detected": passed,
+                "passed": ran_ok,
+                "signal_detected": detected_ok,
                 "error": error,
             }
 
@@ -179,8 +205,11 @@ def run_eval(
 
     elapsed = time.time() - start_time
     n = len(results)
-    pass_at_1 = pass_count / n if n else 0.0
-    sda = signal_detected / n if n else 0.0
+    # pass@1 and signal_detection_accuracy are defined over non-refusal pairs only
+    # (contracts/evalreport-schema.md) — scope_refusal pairs feed scope_refusal_accuracy
+    # instead, computed separately.
+    pass_at_1 = pass_count / non_refusal_total if non_refusal_total else 0.0
+    sda = signal_detected / non_refusal_total if non_refusal_total else 0.0
     sra = refusal_correct / refusal_total if refusal_total else None
 
     report = {
