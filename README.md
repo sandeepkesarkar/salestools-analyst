@@ -124,7 +124,7 @@ Short version:
 # Python deps (uses uv, not bare pip)
 uv venv
 uv pip install -e ".[dev]"
-uv run pytest   # 82 unit + integration tests
+uv run pytest   # 89 unit + integration tests
 
 # Local inference (once a model has been trained + exported — see training/ below)
 brew install ollama && ollama serve &
@@ -139,6 +139,11 @@ ollama list      # sales-analyst-1.5b / sales-analyst-3b / sales-analyst-1.5b-v2
 uv pip install -e ".[marimo]"
 uv run marimo edit marimo_ask/notebook.py
 ```
+
+Marimo has no cell-magic system, so `marimo_ask/notebook.py` uses two explicit buttons instead
+of one `%%ask` cell: **Ask** generates the code and shows it to you in an editable box (nothing
+runs yet); **Run this code** is a separate click that actually executes it — same
+review-before-run idea as `%%ask`, just adapted to how Marimo works.
 
 Training itself runs in Google Colab (`training/finetune_1.5b.ipynb` etc.) — see that
 notebook's own intro cell for hardware requirements and step-by-step instructions.

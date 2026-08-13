@@ -1,32 +1,31 @@
 import marimo
 
-__generated_with = "0.9.0"
+__generated_with = "0.23.16"
 app = marimo.App(width="medium")
 
 
 @app.cell
-def __():
+def _():
     import marimo as mo
     from marimo_ask import query_ollama, run_generated_code
+
     return mo, query_ollama, run_generated_code
 
 
 @app.cell
-def __(mo):
-    mo.md(
-        """
-        # salestools-analyst — Marimo `%%ask` equivalent
+def _(mo):
+    mo.md("""
+    # salestools-analyst — Marimo `%%ask` equivalent
 
-        Marimo has no cell-magic system, so this is two explicit steps instead of one
-        `%%ask` cell: **Ask** generates the code and shows it to you (editable) before
-        anything runs; **Run this code** is a separate action that actually executes it.
-        """
-    )
+    Marimo has no cell-magic system, so this is two explicit steps instead of one
+    `%%ask` cell: **Ask** generates the code and shows it to you (editable) before
+    anything runs; **Run this code** is a separate action that actually executes it.
+    """)
     return
 
 
 @app.cell
-def __(mo):
+def _(mo):
     question = mo.ui.text(
         label="Question",
         placeholder="Is my overall sales trend going up or down?",
@@ -48,7 +47,7 @@ def __(mo):
 
 
 @app.cell
-def __(ask_button, mo, model, question, query_ollama):
+def _(ask_button, mo, model, query_ollama, question):
     mo.stop(not ask_button.value, mo.md("Click **Ask** to generate code."))
     mo.stop(not question.value.strip(), mo.md("Type a question first."))
 
@@ -68,7 +67,7 @@ def __(ask_button, mo, model, question, query_ollama):
 
 
 @app.cell
-def __(code_editor, csv_path, mo, run_button, run_generated_code):
+def _(code_editor, csv_path, mo, run_button, run_generated_code):
     mo.stop(not run_button.value, mo.md("Click **Run this code** to execute it."))
 
     result = run_generated_code(code_editor.value, csv_path.value)

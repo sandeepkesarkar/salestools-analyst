@@ -27,6 +27,9 @@ venv/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
+# Marimo runtime session cache
+__marimo__/
+
 # Test cache
 .pytest_cache/
 
