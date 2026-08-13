@@ -105,6 +105,7 @@ execution.
 | `data/v1/`, `data/v2/` | Generated training/held-out/delta JSONL — gitignored, regenerate with `data/generator/generate.py` (two small files are committed as exceptions: `data/v2/replay_v1.jsonl`, `data/v2/held_out.jsonl`) |
 | `training/` | Fine-tune notebooks (`finetune_1.5b.ipynb`, `finetune_3b.ipynb`, `finetune_1.5b_v2.ipynb`), LoRA configs, `export.sh` |
 | `jupyter_magic/` | The `%%ask` IPython cell magic |
+| `marimo_ask/` | Marimo-notebook equivalent — Marimo has no cell-magic system, so this is plain importable functions (`query_ollama`, `run_generated_code`) plus a ready-to-run example notebook (`marimo_ask/notebook.py`) |
 | `eval/` | Evaluation harness (`run_eval.py`) and A/B comparison tool (`compare.py`) |
 | `models/` | Trained adapters / merged models / GGUF exports (gitignored — large binaries) |
 | `tests/` | Unit + integration tests |
@@ -133,6 +134,10 @@ ollama list      # sales-analyst-1.5b / sales-analyst-3b / sales-analyst-1.5b-v2
 #   %load_ext jupyter_magic
 #   %%ask
 #   Is my overall sales trend going up or down?
+
+# Prefer Marimo? No extension-loading step needed — just:
+uv pip install -e ".[marimo]"
+uv run marimo edit marimo_ask/notebook.py
 ```
 
 Training itself runs in Google Colab (`training/finetune_1.5b.ipynb` etc.) — see that

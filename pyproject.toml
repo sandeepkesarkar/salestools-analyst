@@ -16,8 +16,9 @@ dependencies = [
 
 [project.optional-dependencies]
 jupyter = ["ipython>=8.0"]
+marimo = ["marimo"]
 dev = ["pytest>=7.4", "pytest-cov", "ipython>=8.0"]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["salestools*", "jupyter_magic*"]
+include = ["salestools*", "jupyter_magic*", "marimo_ask*"]
